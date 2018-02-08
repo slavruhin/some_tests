@@ -7,47 +7,6 @@ import java.util.*;
  * @author S.Lavruhin
  *
  */
-class JahrFilter implements Filter {
-	
-	int Geburtsjahr;
-	
-	JahrFilter(int Geburtsjahr) {
-		this.Geburtsjahr = Geburtsjahr;
-	}
-
-	@Override
-	public boolean accept(Person person) {
-		return person.Geburtsjahr == Geburtsjahr;
-	}
-}
-
-/**
- * 
- * @author S.Lavruhin
- *
- */
-class MultiFilter implements Filter {
-	ArrayList<Filter> filters = new ArrayList<Filter>();
-
-	MultiFilter(Filter ... filters) {
-		for(Filter f : filters)
-			this.filters.add(f);
-	}
-
-	@Override
-	public boolean accept(Person person) {
-		for(Filter f : filters)
-			if(!f.accept(person))
-				return false;
-		return true;
-	}
-}
-
-/**
- * 
- * @author S.Lavruhin
- *
- */
 public class Testing {
 	
 	static class InnerJahrFilter implements Filter {
@@ -82,6 +41,23 @@ public class Testing {
 		return arr;
 	}
 
+	/**
+	 * 
+	 * @param persons
+	 * @param filter
+	 * @return
+	 */
+	static Person[] filtern(Person[] persons, GenericFilter<Person> filter) {
+		
+		ArrayList<Person> filtered = new ArrayList<Person>();
+		if(persons != null)
+			for(Person p : persons)
+				if(filter.accept(p))
+					filtered.add(p);
+		
+		Person[] arr = (Person[])filtered.toArray(new Person[0]);
+		return arr;
+	}
 	
 	public static void main(String[] args) {
 		Person[] persons = new Person[] {

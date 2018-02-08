@@ -16,8 +16,8 @@ enum Hunderasse_v01 {
 	@Override
 	public String toString() {
 		String n = name().charAt(0) + name().substring(1).toLowerCase();
-		return String.format("%-6s, max. Größe: %.1f", n, maxGroesse);
-		//return String.format("ordinal=%d : %s (%s), max. Größe: %.1f", ordinal(), n, name(), maxGroesse);
+		return String.format("%-6s, max. GrÃ¶ÃŸe: %.1f", n, maxGroesse);
+		//return String.format("ordinal=%d : %s (%s), max. GrÃ¶ÃŸe: %.1f", ordinal(), n, name(), maxGroesse);
 	}
 }
 
@@ -34,8 +34,8 @@ enum Hunderasse_v02 {
 	
 	@Override
 	public String toString() {
-		return String.format("%-6s, max. Größe: %.1f", alias, maxGroesse);
-		//return String.format("ordinal=%d : %s (%s), max. Größe: %.1f", ordinal(), n, name(), maxGroesse);
+		return String.format("%-6s, max. GrÃ¶ÃŸe: %.1f", alias, maxGroesse);
+		//return String.format("ordinal=%d : %s (%s), max. GrÃ¶ÃŸe: %.1f", ordinal(), n, name(), maxGroesse);
 	}
 }
 
@@ -45,7 +45,7 @@ enum Hunderasse_v03 {
 	@Override
 	public String toString() {
 		String n = name().charAt(0) + name().substring(1).toLowerCase();
-		return String.format("%-6s, max. Größe: %.1f", n, (ordinal() + 1) * .5);
+		return String.format("%-6s, max. Grï¿½ï¿½e: %.1f", n, (ordinal() + 1) * .5);
 	}
 }
 
