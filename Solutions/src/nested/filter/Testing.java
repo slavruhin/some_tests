@@ -9,6 +9,7 @@ import java.util.*;
  */
 public class Testing {
 	
+	
 	static class InnerJahrFilter implements Filter {
 
 		int Geburtsjahr;
@@ -40,24 +41,6 @@ public class Testing {
 		Person[] arr = (Person[])filtered.toArray(new Person[0]);
 		return arr;
 	}
-
-	/**
-	 * 
-	 * @param persons
-	 * @param filter
-	 * @return
-	 */
-	static Person[] filtern(Person[] persons, GenericFilter<Person> filter) {
-		
-		ArrayList<Person> filtered = new ArrayList<Person>();
-		if(persons != null)
-			for(Person p : persons)
-				if(filter.accept(p))
-					filtered.add(p);
-		
-		Person[] arr = (Person[])filtered.toArray(new Person[0]);
-		return arr;
-	}
 	
 	public static void main(String[] args) {
 		Person[] persons = new Person[] {
@@ -69,7 +52,7 @@ public class Testing {
 		
 		// Erzeugen Sie mit einer Toplevel-Klasse einen Filter, 
 		// der nur die Personen akzeptiert, die nach einem bestimmten Jahr geboren wurden.
-		System.out.println("Case 1 : external filter");
+		System.out.println("Case 1 : using external filter");
 		JahrFilter filter = new JahrFilter(1962);
 		Person[] filtered = filtern(persons, filter);
 		for(Person p : filtered)
@@ -78,7 +61,7 @@ public class Testing {
 		
 		// Erzeugen Sie mit einer inneren Klasse einen Filter, 
 		// der nur die Personen akzeptiert, die in ihrem Nachnamen mindestens ein 'a' haben
-		System.out.println("Case 2: innere filter");
+		System.out.println("Case 2: using innere filter");
 		InnerJahrFilter filter2 = new Testing.InnerJahrFilter(1989);
 		filtered = filtern(persons, filter2);
 		for(Person p : filtered)
@@ -87,7 +70,7 @@ public class Testing {
 		
 		// Erzeugen Sie mit einer lokalen Klasse einen Filter, 
 		// der nur die Personen akzeptiert, die in ihrem Nachnamen mindestens 4 Zeichen haben
-		System.out.println("Case 3: local filter");
+		System.out.println("Case 3: using local filter");
 		class LocalNameFilter implements Filter {
 			@Override
 			public boolean accept(Person person) {
@@ -102,7 +85,7 @@ public class Testing {
 		
 		// Erzeugen Sie mit einer anonymen Klasse einen Filter, 
 		// der die Eigenschaften zwei anderer Filter (im weiteren A und B genannt) vereint. Akzeptiert werden mit dem neuen Filter nur die Personen, die von Filter A UND Filter B akzeptiert werden. Benutzen Sie zum Testen als Filter A und B die Filter aus den bisherigen Aufgabenpunkten
-		System.out.println("Case 4: anonym filter");
+		System.out.println("Case 4: using anonym filter");
 		filtered = filtern(persons, new MultiFilter(filter2, filter3));
 		for(Person p : filtered)
 			System.out.println(p);
@@ -110,7 +93,7 @@ public class Testing {
 		
 		// Optional: Rufen Sie die Methode filtern mit einer Lambda-Funktion auf, 
 		// mit der nur die Personen akzeptiert werden, die in einem Schaltjahr geboren wurden
-		System.out.println("Case 5: lambda filter");
+		System.out.println("Case 5: using lambda filter");
 		Filter filter5 = x -> 1971 == x.Geburtsjahr;
 		filtered = filtern(persons, filter5);
 		for(Person p : filtered)
