@@ -9,12 +9,35 @@ import java.util.*;
  */
 public class Testing {
 	
-	
-	static class InnerJahrFilter implements Filter {
+	/**
+	 * Member inner class :
+	 *  	non static nested class that is declared at the member level of a class.
+	 *
+	 */
+	class InnerJahrFilter implements Filter {
 
 		int Geburtsjahr;
 
 		InnerJahrFilter(int Geburtsjahr) {
+			this.Geburtsjahr = Geburtsjahr;
+		}
+
+		@Override
+		public boolean accept(Person person) {
+			return person.Geburtsjahr == Geburtsjahr;
+		}
+	} 
+
+	/**
+	 * Top-level inner class :
+	 *  	static inner classes that are nested at the member level of a class.
+	 *
+	 */
+	static class StaticInnerJahrFilter implements Filter {
+
+		int Geburtsjahr;
+
+		StaticInnerJahrFilter(int Geburtsjahr) {
 			this.Geburtsjahr = Geburtsjahr;
 		}
 
@@ -52,8 +75,8 @@ public class Testing {
 		
 		// Erzeugen Sie mit einer Toplevel-Klasse einen Filter, 
 		// der nur die Personen akzeptiert, die nach einem bestimmten Jahr geboren wurden.
-		System.out.println("Case 1 : using external filter");
-		JahrFilter filter = new JahrFilter(1962);
+		System.out.println("Case 1 : using top-level filter");
+		StaticInnerJahrFilter filter = new StaticInnerJahrFilter(1962);
 		Person[] filtered = filtern(persons, filter);
 		for(Person p : filtered)
 			System.out.println(p);
@@ -62,7 +85,7 @@ public class Testing {
 		// Erzeugen Sie mit einer inneren Klasse einen Filter, 
 		// der nur die Personen akzeptiert, die in ihrem Nachnamen mindestens ein 'a' haben
 		System.out.println("Case 2: using innere filter");
-		InnerJahrFilter filter2 = new Testing.InnerJahrFilter(1989);
+		InnerJahrFilter filter2 = new Testing().new InnerJahrFilter(1989);
 		filtered = filtern(persons, filter2);
 		for(Person p : filtered)
 			System.out.println(p);
@@ -71,6 +94,9 @@ public class Testing {
 		// Erzeugen Sie mit einer lokalen Klasse einen Filter, 
 		// der nur die Personen akzeptiert, die in ihrem Nachnamen mindestens 4 Zeichen haben
 		System.out.println("Case 3: using local filter");
+		/**
+		 * A local inner class is defined within a method. 
+		 */
 		class LocalNameFilter implements Filter {
 			@Override
 			public boolean accept(Person person) {
