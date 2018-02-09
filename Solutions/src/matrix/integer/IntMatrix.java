@@ -3,14 +3,33 @@
  */
 package matrix.integer;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+//import static org.junit.jupiter.api.Assertions.assertEquals;
+
+interface IntOperation {
+	int calculate(int a, int b);
+}
+
+class DefaultValueSetter {
+	public int value(int min, int max) {  return min; };
+}
+
+class RandomValueSetter extends DefaultValueSetter {
+	public int value(int min, int max) {
+		if(min > max) {
+			int swap = min; min = max; max = swap;
+		}
+		return min + (int) (Math.random() * max); 
+	}
+}
+
+
 
 /**
  * @author slavruhin-ronn
  *
  */
 public class IntMatrix {
-	
+	public final int x, y;
 	private final int [][] data;
 	
 	/**
@@ -32,10 +51,10 @@ public class IntMatrix {
 		if(xDimension < 1 || yDimension < 1)
 			throw new ExceptionInInitializerError();
 
+		x = xDimension;
+		y = yDimension;
 		data = new int[xDimension][yDimension];
-		for(int x = 0 ; x < xDimension ; x++)
-			for(int y = 0 ; y < yDimension ; y++)
-				data[x][y] = defaultValue;
+		initialize(defaultValue, 0, new  DefaultValueSetter());
 	}
 	
 	/**
@@ -48,10 +67,16 @@ public class IntMatrix {
 		if(xDimension < 1 || yDimension < 1)
 			throw new ExceptionInInitializerError();
 
+		x = xDimension;
+		y = yDimension;
 		data = new int[xDimension][yDimension];
-		for(int x = 0 ; x < xDimension ; x++)
-			for(int y = 0 ; y < yDimension ; y++)
-				data[x][y] = minRandomValue + (int) (Math.random() * maxRandomValue); 
+		initialize(minRandomValue, maxRandomValue, new  RandomValueSetter());
+	}
+	
+	private void initialize(int min, int max, DefaultValueSetter setter) {
+		for(int i = 0 ; i < x ; i++)
+			for(int j = 0 ; j < y ; j++)
+				data[i][j] = setter.value(min,  max);
 	}
 
 	/**
@@ -71,7 +96,7 @@ public class IntMatrix {
 	 * @return
 	 */
 	public boolean dimensionEquals(IntMatrix m) {
-		return getXDimension() == m.getXDimension() && getYDimension() == m.getYDimension() ? true : false;
+		return x == m.x && y == m.y ? true : false;
 	}
 
 	@Override
@@ -80,7 +105,6 @@ public class IntMatrix {
 		if(! dimensionEquals(m))
 			return false;
 		
-		int x = getXDimension(), y = getYDimension();
 		for(int i = 0 ; i < x; i++)
 			for(int j = 0 ; j < y ; j++)
 				if(get(i, j) != m.get(i, j))
@@ -88,118 +112,63 @@ public class IntMatrix {
 		return true;
 	}
 	
-
 	/**
 	 * 
 	 * @param value
 	 * @return
 	 */
-	public IntMatrix add(int value) {
-		int x = getXDimension(), y = getYDimension();
+	public IntMatrix calculate(int value, IntOperation operation) {
 		for(int i = 0 ; i < x; i++)
 			for(int j = 0 ; j < y ; j++)
-				data[i][j] += value;
+				data[i][j] = operation.calculate(data[i][j], value ) ;
 		return this;
 	}
+	/**
+	 * 
+	 * @param m
+	 * @return
+	 */
+	public IntMatrix calculate(IntMatrix m, IntOperation operation) {
+		if(dimensionEquals(m)) {
+			for(int i = 0 ; i < x; i++)
+				for(int j = 0 ; j < y ; j++)
+					data[i][j] = operation.calculate(data[i][j], m.get()[i][j] ) ;
+		}
+		return this;
+	}
+
 	
 	/**
 	 * 
-	 * @param m
+	 * @param value
 	 * @return
 	 */
-	public IntMatrix add(IntMatrix m) {
-		if(dimensionEquals(m)) {
-			int x = getXDimension(), y = getYDimension();
-			for(int i = 0 ; i < x; i++)
-				for(int j = 0 ; j < y ; j++)
-					get(i)[j] += m.get(i)[j];
-		}
-		return this;
-	}
+	public IntMatrix add(int value)   { return calculate(value, (x,y) -> x + y ); }
+	public IntMatrix add(IntMatrix m) { return calculate(m,     (x,y) -> x + y ); }
 
 	/**
 	 * 
 	 * @param value
 	 * @return
 	 */
-	public IntMatrix sub(int value) {
-		int x = getXDimension(), y = getYDimension();
-		for(int i = 0 ; i < x; i++)
-			for(int j = 0 ; j < y ; j++)
-				data[i][j] -= value;
-		return this;
-	}
-	
-	/**
-	 * 
-	 * @param m
-	 * @return
-	 */
-	public IntMatrix sub(IntMatrix m) {
-		if(dimensionEquals(m)) {
-			int x = getXDimension(), y = getYDimension();
-			for(int i = 0 ; i < x; i++)
-				for(int j = 0 ; j < y ; j++)
-					get(i)[j] -= m.get(i)[j];
-		}
-		return this;
-	}
+	public IntMatrix sub(int value)   { return calculate(value, (x,y) -> x - y ); }
+	public IntMatrix sub(IntMatrix m) { return calculate(m,     (x,y) -> x - y ); }
 
 	/**
 	 * 
 	 * @param value
 	 * @return
 	 */
-	public IntMatrix multiply(int value) {
-		int x = getXDimension(), y = getYDimension();
-		for(int i = 0 ; i < x; i++)
-			for(int j = 0 ; j < y ; j++)
-				data[i][j] *= value;
-		return this;
-	}
-	
-	/**
-	 * 
-	 * @param m
-	 * @return
-	 */
-	public IntMatrix multiply(IntMatrix m) {
-		if(dimensionEquals(m)) {
-			int x = getXDimension(), y = getYDimension();
-			for(int i = 0 ; i < x; i++)
-				for(int j = 0 ; j < y ; j++)
-					get(i)[j] *= m.get(i)[j];
-		}
-		return this;
-	}
+	public IntMatrix multiply(int value)   { return calculate(value, (x,y) -> x * y ); }
+	public IntMatrix multiply(IntMatrix m) { return calculate(m,     (x,y) -> x * y ); }
 
 	/**
 	 * 
 	 * @param value
 	 * @return
 	 */
-	public IntMatrix divide(int value) {
-		int x = getXDimension(), y = getYDimension();
-		for(int i = 0 ; i < x; i++)
-			for(int j = 0 ; j < y ; j++)
-				data[i][j] /= value;
-		return this;
-	}
-
-	/**
-	 * 
-	 * @param m
-	 * @return
-	 */
-	public IntMatrix divide(IntMatrix m) {
-		if(dimensionEquals(m)) {
-			int x = getXDimension(), y = getYDimension();
-			for(int i = 0 ; i < x; i++)
-				for(int j = 0 ; j < y ; j++)
-					get(i)[j] /= m.get(i)[j];
-		}
-		return this;
-	}
+	public IntMatrix divide(int value)   { return calculate(value, (x,y) -> x / y ); }
+	public IntMatrix divide(IntMatrix m) { return calculate(m,     (x,y) -> x / y ); }
 	
 	/**
 	 * 
@@ -208,7 +177,6 @@ public class IntMatrix {
 	 */
 	public IntMatrix transpose() {
 		int swap = 0;
-		int x = getXDimension(), y = getYDimension();
 		for(int i = 0 ; i < x; i++)
 			for(int j = 0 ; j < y ; j++) {
 				swap = data[i][j];
@@ -222,7 +190,6 @@ public class IntMatrix {
 	 * @return
 	 */
 	public int[] toArray() {
-		int x = getXDimension(), y = getYDimension();
 		int [] array = new int[x * y];
 		for(int i = 0 ; i < x; i++)
 			for(int j = 0 ; j < y ; j++)
@@ -261,54 +228,27 @@ public class IntMatrix {
 	 * 
 	 * @return
 	 */
-	int getXDimension() { 
-		return data.length;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	int getYDimension() { 
-		return data[0].length;
-	}
-
-	
-	/**
-	 * 
-	 * @return
-	 */
 	int getMaxValue() { 
-		int x = getXDimension();
-		int y = getYDimension();
 		int max = Integer.MIN_VALUE;
-		for(int i = 0 ; i < x; i++)
-			for(int j = 0 ; j < y ; j++)
-				if(max < data[i][j])
-					max = data[i][j];
+		for(int[] row : data)
+			for(int p : row)
+				max = max < p ? p : max;
 		return max;
 	}
 	
 	@Override
 	public String toString() {
-		int x = getXDimension();
-		int y = getYDimension();
 		String format = String.format("%%%dd ", String.format("%d",getMaxValue()).length());
-		
-		StringBuffer buffer = new StringBuffer((format.length() * x + 4) * y);
-		for(int i = 0 ; i < x; i++) {
-			for(int j = 0 ; j < y ; j++) {
-				buffer.append(String.format(format, data[i][j]));
-			}
+		StringBuffer buffer = new StringBuffer((format.length() * data[0].length + 4) * data.length);
+		for(int[] row : data) {
+			for(int p : row)
+				buffer.append(String.format(format, p));
 			buffer.append(String.format("%n"));
 		}
 		return buffer.toString();
 	}
 
-	
-	
-	
-	
+
 	/**
 	 * @param args
 	 */
