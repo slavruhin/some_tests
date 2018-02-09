@@ -111,7 +111,7 @@ class IntMatrixTest {
 		System.out.println(m1.toString());
 		System.out.println();
 
-		assertTrue(m1.divide(2).equals(m2));
+		assertFalse(m1.divide(2).equals(m2));
 		System.out.println(m1.toString());
 		System.out.println();
 	}

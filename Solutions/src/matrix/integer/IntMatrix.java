@@ -9,21 +9,6 @@ interface IntOperation {
 	int calculate(int a, int b);
 }
 
-class DefaultValueSetter {
-	public int value(int min, int max) {  return min; };
-}
-
-class RandomValueSetter extends DefaultValueSetter {
-	public int value(int min, int max) {
-		if(min > max) {
-			int swap = min; min = max; max = swap;
-		}
-		return min + (int) (Math.random() * max); 
-	}
-}
-
-
-
 /**
  * @author slavruhin-ronn
  *
@@ -54,7 +39,7 @@ public class IntMatrix {
 		x = xDimension;
 		y = yDimension;
 		data = new int[xDimension][yDimension];
-		initialize(defaultValue, 0, new  DefaultValueSetter());
+		initialize(defaultValue);
 	}
 	
 	/**
@@ -70,13 +55,22 @@ public class IntMatrix {
 		x = xDimension;
 		y = yDimension;
 		data = new int[xDimension][yDimension];
-		initialize(minRandomValue, maxRandomValue, new  RandomValueSetter());
+		initialize(minRandomValue, maxRandomValue);
 	}
-	
-	private void initialize(int min, int max, DefaultValueSetter setter) {
+
+	private void initialize(int value) {
 		for(int i = 0 ; i < x ; i++)
 			for(int j = 0 ; j < y ; j++)
-				data[i][j] = setter.value(min,  max);
+				data[i][j] = value;
+	}
+	
+	private void initialize(int min, int max) {
+		if(min > max) {
+			int swap = min; min = max; max = swap;
+		}
+		for(int i = 0 ; i < x ; i++)
+			for(int j = 0 ; j < y ; j++)
+				data[i][j] = min + (int) (Math.random() * max);
 	}
 
 	/**
@@ -143,16 +137,16 @@ public class IntMatrix {
 	 * @param value
 	 * @return
 	 */
-	public IntMatrix add(int value)   { return calculate(value, (x,y) -> x + y ); }
-	public IntMatrix add(IntMatrix m) { return calculate(m,     (x,y) -> x + y ); }
+	public IntMatrix add(int value)        { return calculate(value, (x,y) -> x + y ); }
+	public IntMatrix add(IntMatrix m)      { return calculate(m,     (x,y) -> x + y ); }
 
 	/**
 	 * 
 	 * @param value
 	 * @return
 	 */
-	public IntMatrix sub(int value)   { return calculate(value, (x,y) -> x - y ); }
-	public IntMatrix sub(IntMatrix m) { return calculate(m,     (x,y) -> x - y ); }
+	public IntMatrix sub(int value)        { return calculate(value, (x,y) -> x - y ); }
+	public IntMatrix sub(IntMatrix m)      { return calculate(m,     (x,y) -> x - y ); }
 
 	/**
 	 * 
@@ -167,8 +161,8 @@ public class IntMatrix {
 	 * @param value
 	 * @return
 	 */
-	public IntMatrix divide(int value)   { return calculate(value, (x,y) -> x / y ); }
-	public IntMatrix divide(IntMatrix m) { return calculate(m,     (x,y) -> x / y ); }
+	public IntMatrix divide(int value)     { return calculate(value, (x,y) -> x / y ); }
+	public IntMatrix divide(IntMatrix m)   { return calculate(m,     (x,y) -> x / y ); }
 	
 	/**
 	 * 
