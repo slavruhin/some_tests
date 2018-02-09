@@ -170,10 +170,9 @@ public class IntMatrix {
 	 * @return
 	 */
 	public IntMatrix transpose() {
-		int swap = 0;
 		for(int i = 0 ; i < x; i++)
 			for(int j = 0 ; j < y ; j++) {
-				swap = data[i][j];
+				int swap = data[i][j];
 				data[i][j] = data[j][i];
 				data[j][i] = swap;
 			}
