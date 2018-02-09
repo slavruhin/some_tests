@@ -11,7 +11,7 @@ public class Rectangle extends Shape {
 	 * @param y
 	 */
 	public Rectangle(double width, double hight) {
-		super(width * hight, 2 * (width + hight));
+		super(width * hight, 2 * (width + hight), "Rectangle");
 		this.width = width;
 		this.hight = hight;
 	}
@@ -22,5 +22,9 @@ public class Rectangle extends Shape {
 	
 	public double getHight() {
 		return hight;
+	}
+	
+	public String info() {
+		return String.format("%-12s (%.2f X %.2f)%n", getType(), width, hight);
 	}
 }

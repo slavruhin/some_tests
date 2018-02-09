@@ -39,7 +39,9 @@ public class IntMatrix {
 		x = xDimension;
 		y = yDimension;
 		data = new int[xDimension][yDimension];
-		initialize(defaultValue);
+		for(int i = 0 ; i < x ; i++)
+			for(int j = 0 ; j < y ; j++)
+				data[i][j] = defaultValue;
 	}
 	
 	/**
@@ -58,12 +60,11 @@ public class IntMatrix {
 		initialize(minRandomValue, maxRandomValue);
 	}
 
-	private void initialize(int value) {
-		for(int i = 0 ; i < x ; i++)
-			for(int j = 0 ; j < y ; j++)
-				data[i][j] = value;
-	}
-	
+	/**
+	 * 
+	 * @param min
+	 * @param max
+	 */
 	private void initialize(int min, int max) {
 		if(min > max) {
 			int swap = min; min = max; max = swap;
@@ -130,7 +131,6 @@ public class IntMatrix {
 		}
 		return this;
 	}
-
 	
 	/**
 	 * 
@@ -178,6 +178,7 @@ public class IntMatrix {
 			}
 		return this;
 	}
+
 	/**
 	 * 
 	 * @return

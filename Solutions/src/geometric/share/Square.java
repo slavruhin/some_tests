@@ -10,7 +10,7 @@ public class Square extends Shape {
 	 * @param length
 	 */
 	public Square(double length) {
-		super(4 * length, length * length);
+		super(4 * length, length * length, "Square");
 		this.length = length;
 	}
 	
@@ -20,5 +20,10 @@ public class Square extends Shape {
 	 */
 	public double getLength() {
 		return length;
+	}
+
+	@Override
+	public String info() {
+		return String.format("%-12s (%.2f X %.2f)%n", getType(), length, length);
 	}
 }
