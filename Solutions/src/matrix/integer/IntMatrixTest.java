@@ -115,5 +115,16 @@ class IntMatrixTest {
 		System.out.println(m1.toString());
 		System.out.println();
 	}
+	
+	@Test
+	void testMatrixTransposing() {
+		int x = 10,  y = 10,  value = 200;
+		IntMatrix matrix = IntMatrix.getRandomMatrix(x,  y, value);
+		System.out.println(matrix);
+		System.out.println();
+		
+		System.out.println(matrix.transpose());
+		System.out.println();
+	}
 
 }

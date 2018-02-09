@@ -94,6 +94,62 @@ public class IntMatrix {
 	 * @param value
 	 * @return
 	 */
+	public IntMatrix add(int value) {
+		int x = getXDimension(), y = getYDimension();
+		for(int i = 0 ; i < x; i++)
+			for(int j = 0 ; j < y ; j++)
+				data[i][j] += value;
+		return this;
+	}
+	
+	/**
+	 * 
+	 * @param m
+	 * @return
+	 */
+	public IntMatrix add(IntMatrix m) {
+		if(dimensionEquals(m)) {
+			int x = getXDimension(), y = getYDimension();
+			for(int i = 0 ; i < x; i++)
+				for(int j = 0 ; j < y ; j++)
+					get(i)[j] += m.get(i)[j];
+		}
+		return this;
+	}
+
+	/**
+	 * 
+	 * @param value
+	 * @return
+	 */
+	public IntMatrix sub(int value) {
+		int x = getXDimension(), y = getYDimension();
+		for(int i = 0 ; i < x; i++)
+			for(int j = 0 ; j < y ; j++)
+				data[i][j] -= value;
+		return this;
+	}
+	
+	/**
+	 * 
+	 * @param m
+	 * @return
+	 */
+	public IntMatrix sub(IntMatrix m) {
+		if(dimensionEquals(m)) {
+			int x = getXDimension(), y = getYDimension();
+			for(int i = 0 ; i < x; i++)
+				for(int j = 0 ; j < y ; j++)
+					get(i)[j] -= m.get(i)[j];
+		}
+		return this;
+	}
+
+	/**
+	 * 
+	 * @param value
+	 * @return
+	 */
 	public IntMatrix multiply(int value) {
 		int x = getXDimension(), y = getYDimension();
 		for(int i = 0 ; i < x; i++)
@@ -151,6 +207,14 @@ public class IntMatrix {
 	 * @return
 	 */
 	public IntMatrix transpose() {
+		int swap = 0;
+		int x = getXDimension(), y = getYDimension();
+		for(int i = 0 ; i < x; i++)
+			for(int j = 0 ; j < y ; j++) {
+				swap = data[i][j];
+				data[i][j] = data[j][i];
+				data[j][i] = swap;
+			}
 		return this;
 	}
 	/**
