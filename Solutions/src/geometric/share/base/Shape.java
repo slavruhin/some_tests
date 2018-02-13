@@ -1,22 +1,25 @@
 package geometric.share.base;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+
 /**
  * 
  * @author Sergej
  *
  */
-public abstract class Shape implements Geometric, Movable {
+public class Shape implements Movable<Double> {
 
 	private final double flache;
 	private final double perimeter;
 	private final String type;
-	
-	private int posX = 0, posY = 0;
+	private double X = 0, Y = 0;
 
 	/**
 	 * 
 	 * @param flache
 	 * @param perimeter
+	 * @param type
 	 */
 	public Shape(double flache, double perimeter, String type) {
 		this.flache    = flache;
@@ -27,17 +30,26 @@ public abstract class Shape implements Geometric, Movable {
 	/**
 	 * 
 	 */
-	@Override
+	//@Override
 	public double getFlaeche() {
 		return flache;
+	}
+	//@Override
+	public String Flaeche() {
+		return String.format("Flaeche %.2f", flache);
 	}
 
 	/**
 	 * 
 	 * @return
 	 */
+	//@Override
 	public double getPerimeter() {
 		return perimeter;
+	}
+	//@Override
+	public String Perimeter() {
+		return String.format("Perimeter %.2f", perimeter);
 	}
 	
 	/**
@@ -47,31 +59,49 @@ public abstract class Shape implements Geometric, Movable {
 	protected String getType() {
 		return type;
 	}
+	
+
 
 	/**
 	 * 
 	 */
 	@Override
-	public void bewegen(int x, int y) {
-		posX = x;
-		posY = y;
+	public Double getPositionX() {
+		return X;
 	}
 
 	/**
 	 * 
 	 */
 	@Override
-	public int getPositionX() {
-		return posX;
-	}
-
-	/**
-	 * 
-	 */
-	@Override
-	public int getPositionY() {
-		return posY;
+	public Double getPositionY() {
+		return Y;
 	}
 	
-	abstract public String info();
+	/**
+	 * 
+	 */
+	@Override
+	public void bewegen(Double x, Double y) {
+		X = x;
+		Y = y;
+	}
+
+	@Override
+	public String Position() {
+		return String.format("Position (%.2f, %.2f)", X, Y);
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("%-12s : %-25s ; %-20s ; %-20s", type, Position(), Flaeche(), Perimeter());
+	}
+	
+//	public String DoubleFormatter(double d) {
+//		DecimalFormatSymbols decimalFormatSymbols = new DecimalFormatSymbols();
+//		decimalFormatSymbols.setDecimalSeparator('.');
+//		decimalFormatSymbols.setGroupingSeparator(',');
+//		DecimalFormat decimalFormat = new DecimalFormat("#,##0.00", decimalFormatSymbols);
+//		return decimalFormat.format(d);
+//	}
 }

@@ -16,15 +16,12 @@ public class Rectangle extends Shape {
 		this.hight = hight;
 	}
 	
-	public double getWidth() {
-		return width;
-	}
+	public double getWidth() { return width; }
 	
-	public double getHight() {
-		return hight;
-	}
+	public double getHight() { return hight; }
 	
-	public String info() {
-		return String.format("%-12s (%.2f X %.2f)%n", getType(), width, hight);
+	@Override
+	public String toString() {
+		return super.toString() + String.format(" ;  Width/Hight (%.2f x %.2f)", width, hight);
 	}
 }
