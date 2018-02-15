@@ -175,13 +175,13 @@ public class TestPersonComparators {
 		for(Person p : test.persons)
 			System.out.println(p);
 		System.out.println();
-		
+
 		System.out.println("Sorted list : lastname:");
 		Arrays.sort(test.persons, new FilterNachnameUp());
 		for(Person p : test.persons)
 			System.out.println(p);
 		System.out.println();
-		
+
 		System.out.println("Sorted list : years:");
 		Arrays.sort(test.persons, new FilterYearUp());
 		for(Person p : test.persons)
@@ -189,13 +189,17 @@ public class TestPersonComparators {
 		System.out.println();
 
 		System.out.println("Sorted list : years + lastname + firstname:");
-		FilterMultifilterUp filter = new FilterMultifilterUp(new FilterYearUp(), new FilterNachnameUp(), new FilterVornameUp());
+
+		Comparator<Person> f1 = new FilterNachnameUp(), 
+				           f2 = new FilterVornameUp(), 
+				           f3 = new FilterYearUp();
+		FilterMultifilterUp filter = new FilterMultifilterUp(f1, f2, f3);
 		Arrays.sort(test.persons, filter);
 		for(Person p : test.persons)
 			System.out.println(p);
 		System.out.println();
 	}
-	
+
 	/**
 	 * 
 	 */
