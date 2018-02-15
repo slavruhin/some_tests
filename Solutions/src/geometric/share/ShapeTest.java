@@ -5,6 +5,7 @@ import geometric.share.base.*;
 class ShapeTest {
 	
 	private final Shape[] shapes;
+
 	{
 		int size = 100;
 		shapes = new Shape[100];
