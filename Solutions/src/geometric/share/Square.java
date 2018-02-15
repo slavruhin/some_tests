@@ -18,12 +18,10 @@ public class Square extends Shape {
 	 * 
 	 * @return
 	 */
-	public double getLength() {
-		return length;
-	}
+	public double getLength() { return length; }
 
 	@Override
-	public String info() {
-		return String.format("%-12s (%.2f X %.2f)%n", getType(), length, length);
+	public String toString() {
+		return super.toString() + String.format(" ;  Width/Hight (%.2f x %.2f)", length, length);
 	}
 }

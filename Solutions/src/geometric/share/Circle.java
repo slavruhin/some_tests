@@ -18,22 +18,10 @@ public class Circle extends Shape {
 	 * 
 	 * @return
 	 */
-	public double getCircle() {
-	 	return getPerimeter();
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public double getRadius() {
-	 	return radius;
-	}
+	public double getRadius() { return radius; }
 
 	@Override
-	public String info() {
-		return String.format("%-12s (radius: %.2f)%n", getType(), radius);
+	public String toString() {
+		return super.toString() + String.format(" ;  Radius: %.2f", radius);
 	}
-	
-	
 }
