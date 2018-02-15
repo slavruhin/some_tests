@@ -34,10 +34,11 @@ public class Testing {
 				//intLocalPrimitiv = 68;  // error
 				//intLocalWrapper = 69;   // error
 			}
+
 			@Override
 			public String toString() {
 				StringBuffer buffer = new StringBuffer(512); 
-				buffer.append(String.format("\tTesting an access from non static function:%n"));
+				buffer.append(String.format("\tTesting an access from static function:%n"));
 				buffer.append(String.format("\tintPrimitivConstStatic = %2d%n", intPrimitivConstStatic)); 
 				buffer.append(String.format("\tintWrapperConstStatic  = %2d%n", intWrapperConstStatic));
 				buffer.append(String.format("\tintPrimitivStatic      = %2d%n", intPrimitivStatic));
