@@ -1,13 +1,13 @@
 package clocks.base.junit;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import clocks.base.*;
 
-class CircleTest {
+public class CirclePointsTest {
 
 	@Test
-	void testGeometricBase() {
+	public void testGeometricBase() {
 
 		int gradStart = 0, gradEnd = 360, gradStep = 60;
 		assertEquals(6, GeometricBase.getSegmentNumber(gradStart, gradEnd, gradStep));
@@ -38,6 +38,17 @@ class CircleTest {
 		System.out.println();
 		
 		circle = new CirclePoints(200, 200,100, 360, 0, -50);
+		System.out.println(circle);
+		System.out.println();
+		
+		circle = new CirclePoints(200, 200,100, 0, 360, 90);
+		System.out.println(circle);
+		System.out.println();
+	}
+
+	@Test
+	public void testCirclePoints() {
+		CirclePoints circle = new CirclePoints(new Point(200, 200), 100, 0, 360, 90);
 		System.out.println(circle);
 		System.out.println();
 	}
