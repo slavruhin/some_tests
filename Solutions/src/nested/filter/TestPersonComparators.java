@@ -64,7 +64,7 @@ public class TestPersonComparators {
         new Person("Peter",     "Peterson",  2003),
         new Person("Lucy",      "Hammer",    2000)
 	};
-	
+
 	/**
 	 * 
 	 */
