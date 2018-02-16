@@ -1,49 +1,6 @@
 package nested.filter;
 
-import java.util.*;
 
-
-/**
- * Top-levels comparators
- * 
- * @author slavruhin-ronn
- *
- */
-// Local filter 1:
-class TopLevelFilterNachnameUp implements Comparator<Person> {
-	@Override
-	public int compare(Person o1, Person o2) { return o1.Nachname.compareTo(o2.Nachname); }
-};
-
-// Local filter 2:
-class TopLevelFilterVornameUp implements Comparator<Person> {
-	@Override
-	public int compare(Person o1, Person o2) { return o1.Vorname.compareTo(o2.Vorname); }
-};
-
-// Local filter 3:
-class TopLevelFilterYearUp implements Comparator<Person> {
-	@Override
-	public int compare(Person o1, Person o2) { return o1.Geburtsjahr - o2.Geburtsjahr; }
-};
-
-// Local filter 4:
-class TopLevelFilterMultifilterUp implements Comparator<Person> {
-	final Comparator<Person>[] filters;
-	
-	@SuppressWarnings("unchecked")
-	public TopLevelFilterMultifilterUp(Comparator<Person> ... filters) { this.filters = filters; }
-	
-	@Override
-	public int compare(Person o1, Person o2) {
-		for(Comparator<Person> filter : filters) {
-			int ret = filter.compare(o1, o2);
-			if(ret != 0)
-				return ret;
-		}
-		return 0;
-	}
-};
 
 
 /**
