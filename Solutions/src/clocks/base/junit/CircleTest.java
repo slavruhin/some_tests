@@ -33,22 +33,22 @@ class CircleTest {
 
 	@Test
 	public void testCircle() {
-		Circle circle = new Circle(200, 200,100, 360, 0, -30);
+		CirclePoints circle = new CirclePoints(200, 200,100, 360, 0, -30);
 		System.out.println(circle);
 		System.out.println();
 		
-		circle = new Circle(200, 200,100, 360, 0, -50);
+		circle = new CirclePoints(200, 200,100, 360, 0, -50);
 		System.out.println(circle);
 		System.out.println();
 	}
 
 	@Test
 	public void testRadials() {
-		Circle circle = new Circle(200, 200,100, 0, 360, 10);
+		CirclePoints circle = new CirclePoints(200, 200,100, 0, 360, 10);
 		System.out.println(circle);
 		System.out.println();
 		
-		Radials radials = new Radials(new Point(200, 200), 80, 100, 0, 360, 10);
+		CircleRadials radials = new CircleRadials(new Point(200, 200), 80, 100, 0, 360, 10);
 		System.out.println(radials);
 		System.out.println();
 	}

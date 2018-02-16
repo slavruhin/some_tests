@@ -9,7 +9,7 @@ import java.util.*;
  * @author slavruhin-ronn
  *
  */
-public class Circle {
+public class CirclePoints {
 	private Point center;
 	private double radius;
 	private ArrayList<Point> array;
@@ -17,7 +17,7 @@ public class Circle {
 	/**
 	 * Constructor
 	 */
-	public Circle(double x, double y, double radius, int first, int last, int step) {
+	public CirclePoints(double x, double y, double radius, int first, int last, int step) {
 		center = new Point(x, y);
 		this.radius = radius;
 		initArray(first, last, step);
@@ -29,7 +29,7 @@ public class Circle {
 	 * @param center
 	 * @param radius
 	 */
-	public Circle(Point center, double radius, int first, int last, int step) {
+	public CirclePoints(Point center, double radius, int first, int last, int step) {
 		this(center.x, center.y, radius, first, last, step);
 	}
 
@@ -38,7 +38,7 @@ public class Circle {
 	 * 
 	 * @param obj
 	 */
-	public Circle(Circle obj) {
+	public CirclePoints(CirclePoints obj) {
 		this.center = new Point(obj.center);
 		this.radius = obj.radius;
 		array = new ArrayList<>(obj.array);
@@ -60,6 +60,13 @@ public class Circle {
 	
 	public ArrayList<Point> getArray() {
 		return array;
+	}
+	
+	public ArrayList<java.awt.Point> getAwtArray() {
+		ArrayList<java.awt.Point> arr = new ArrayList<java.awt.Point>();
+		for(Point p : array)
+			arr.add(new java.awt.Point( (int)Math.round(p.x), (int)Math.round(p.y)));
+		return arr;
 	}
 
 	/**
