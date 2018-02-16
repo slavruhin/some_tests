@@ -2,7 +2,7 @@ package clocks.base;
 
 import java.util.*;
 
-public class Radials {
+public class CircleRadials {
 	private Point center;
 	private double internal_radius, external_radius;
 	private ArrayList<Radial> array;
@@ -16,7 +16,7 @@ public class Radials {
 	 * @param last
 	 * @param step
 	 */
-	public Radials(Point center, 
+	public CircleRadials(Point center, 
 			       double internal_radius, 
 			       double external_radius,
 			       int first,
@@ -57,8 +57,23 @@ public class Radials {
 		return array;
 	}
 
+	public ArrayList<AwtRadial> getAwtArray() {
+		ArrayList<AwtRadial> arr = new ArrayList<AwtRadial>();
+		for(Radial r : array)
+			arr.add(new AwtRadial(r));
+		return arr;
+	}
+
 	public Point getCenter() {
 		return center;
+	}
+
+	public double getInternalRadius() {
+		return external_radius;
+	}
+
+	public double getExternalRadius() {
+		return external_radius;
 	}
 
 	@Override

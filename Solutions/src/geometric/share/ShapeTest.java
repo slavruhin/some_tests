@@ -24,29 +24,14 @@ class ShapeTest {
 
 	void testInterfaceGeometrie() {
 		for(Shape p : shapes) 
-			System.out.printf(p.info());
+			System.out.println(p);
 		System.out.println();
 	}
 
-	void testInterfaceGeometrieShareProperty() {
-		for(Shape p : shapes) {
-			if(p instanceof Circle) {
-				System.out.println(p.info() + "\tradius=" + ((Circle)p).getRadius() + ", Perimeter=" + p.getPerimeter());
-			}
-			else if(p instanceof Rectangle) {
-				System.out.println(p.info() + "\twidth=" + ((Rectangle)p).getWidth() + ", hight=" + ((Rectangle)p).getHight() + ", Perimeter=" + p.getPerimeter());
-			}
-			else if(p instanceof Square) {
-				System.out.println(p.info() + "\tlength=" + ((Square)p).getLength() + ", Perimeter=" + p.getPerimeter());
-			}
-		}
-		System.out.println();
-	}
 	
 	
 
 	public static void main(String[] args) {
 		new ShapeTest().testInterfaceGeometrie();
-		new ShapeTest().testInterfaceGeometrieShareProperty();
 	}
 }

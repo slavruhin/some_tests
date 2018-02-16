@@ -45,7 +45,7 @@ enum Hunderasse_v03 {
 	@Override
 	public String toString() {
 		String n = name().charAt(0) + name().substring(1).toLowerCase();
-		return String.format("%-6s, max. Gr��e: %.1f", n, (ordinal() + 1) * .5);
+		return String.format("%-6s, max. Große: %.1f", n, (ordinal() + 1) * .5);
 	}
 }
 
