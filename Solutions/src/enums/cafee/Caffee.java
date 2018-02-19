@@ -6,14 +6,15 @@ enum Caffee {
     ESPRESSO   (1.13);
     
     
-    private double preis;
-    Caffee(double preis) {
+    public final double preis;
+    
+    private Caffee(double preis) { 
     	this.preis = preis;
     }
 	
     @Override
     public String toString() {
-    	return String.format("%s : %.2f", name().charAt(0) + name().substring(1).toLowerCase(), preis);
+		return String.format("%-15s : %.2f \u20AC", name().charAt(0) + name().substring(1).toLowerCase(), preis);
     }
 }
 
