@@ -14,16 +14,20 @@ public class Kaffeeautomat {
 		Scanner s = new Scanner(System.in);
 		//s.useLocale(Locale.GERMAN);
 		//s.useLocale(Locale.US);
+		System.out.print(">");
 		while(s.hasNextLine())
 		{
-			String string = s.nextLine().toString();
+			String line = s.nextLine().toString();
+			System.out.print(">");
 			try {
-
+				
+				
+				
 			}
 			catch(NumberFormatException e) {
 			}
 			finally {
-				if(string.equals("exit")) {
+				if(line.equals("exit")) {
 					break; // stop looping block and exit
 				}
 			}

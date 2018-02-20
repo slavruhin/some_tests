@@ -18,7 +18,7 @@ class CashDeskTest {
 		ArrayList<Coin> coins = initCoinsArray(2);
 		for(int i = 0 ; i < 20 ; ++i) {
 			
-			ArrayList<Coin> ret = cashdesk.pay(coins, Caffee.CAPPUCCINO);
+			ArrayList<Coin> ret = cashdesk.purchase(coins, Caffee.CAPPUCCINO);
 			System.out.println(String.format("%2d : Try to pay : %s", i, Caffee.CAPPUCCINO));
 			System.out.println(String.format("incoming : %.2f", CashDesk.summe(coins)));
 			System.out.println(String.format("returned : %.2f", CashDesk.summe(ret)));

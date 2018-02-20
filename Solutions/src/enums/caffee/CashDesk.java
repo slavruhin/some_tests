@@ -9,14 +9,6 @@ import java.util.*;
  */
 public class CashDesk 
 {
-	private TreeMap<Coin, Integer> container = new TreeMap<Coin, Integer>();
-	{ 
-		for(Coin coin : Coin.values())
-			container.put(coin, 0);
-	}
-	
-	public static final Comparator<Double> comparator = (x,y) -> (int)Math.round((x - y) * 100);
-
 	/**
 	 * 
 	 */
@@ -24,10 +16,29 @@ public class CashDesk
 
 	/**
 	 * 
+	 */
+	private TreeMap<Coin, Integer> container = new TreeMap<Coin, Integer>();
+	{ 
+		for(Coin coin : Coin.values())
+			container.put(coin, 0);
+	}
+	
+	/**
+	 * To compare two double values
+	 */
+	public static final Comparator<Double> comparator = (x,y) -> (int)Math.round((x - y) * 100);
+
+	/**
+	 * using external algorithm to change an incoming summe
+	 */
+	public static final CashChangable alg = new CashLinealChange(); 
+
+	/**
+	 * 
 	 * @param caffee
 	 * @return
 	 */
-	public ArrayList<Coin> pay(ArrayList<Coin> coins, Caffee caffee) {
+	public ArrayList<Coin> purchase(ArrayList<Coin> coins, Caffee caffee) {
 		double diff = comparator.compare(summe(coins), caffee.preis) / 100.;
 		if(diff >= 0.) {
 			add(coins);
@@ -59,18 +70,7 @@ public class CashDesk
 	 * @return
 	 */
 	public ArrayList<Coin> change(double summe) {
-		ArrayList<Coin> coins = new ArrayList<Coin>();
-		for(Map.Entry<Coin, Integer> entry : container.entrySet()) {
-			int count = (int)(summe / entry.getKey().value);
-			if(count > 0) {
-				int number = entry.getValue().intValue();
-				count = count < number ? count : number;
-				for(int i = 0 ; i < count ; ++i)
-					coins.add(entry.getKey());
-				summe -= count * entry.getKey().value;
-			}
-		}
-		return coins;
+		return alg.change(summe, container);
 	}
 
 	/**
