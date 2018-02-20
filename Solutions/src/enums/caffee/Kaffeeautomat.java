@@ -1,4 +1,4 @@
-package enums.cafee;
+package enums.caffee;
 
 import java.io.IOException;
 import java.util.Scanner;
