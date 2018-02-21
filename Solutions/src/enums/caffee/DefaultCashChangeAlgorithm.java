@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class CashLinealChange implements CashChangable {
+public class DefaultCashChangeAlgorithm implements CashChangable {
 
 	@Override
 	public ArrayList<Coin> change(double summe, TreeMap<Coin, Integer> container) {

@@ -7,7 +7,7 @@ import java.util.*;
  * @author S.Lavruhin-Ronn
  *
  */
-public class CashDesk 
+public class Cashdesk 
 {
 	/**
 	 * 
@@ -23,6 +23,11 @@ public class CashDesk
 			container.put(coin, 0);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public TreeMap<Coin, Integer> getContainerCopy() {
+		return (TreeMap<Coin, Integer>)container.clone();
+	}
+	
 	/**
 	 * To compare two double values
 	 */
@@ -31,7 +36,10 @@ public class CashDesk
 	/**
 	 * using external algorithm to change an incoming summe
 	 */
-	public static final CashChangable alg = new CashLinealChange(); 
+	private CashChangable algorithm = new DefaultCashChangeAlgorithm();
+	public void setCashChangeAlgorithm(CashChangable algorithm) {
+		this.algorithm = algorithm;
+	}
 
 	/**
 	 * 
@@ -39,11 +47,11 @@ public class CashDesk
 	 * @return
 	 */
 	public ArrayList<Coin> purchase(ArrayList<Coin> coins, Caffee caffee) {
-		double diff = comparator.compare(summe(coins), caffee.preis) / 100.;
+		double diff = comparator.compare(sum(coins), caffee.price) / 100.;
 		if(diff >= 0.) {
 			add(coins);
 			ArrayList<Coin> ret = change(diff);
-			if(comparator.compare(summe(ret), diff) == 0) {
+			if(comparator.compare(sum(ret), diff) == 0) {
 				remove(ret);
 				return ret;
 			}
@@ -57,7 +65,7 @@ public class CashDesk
 	 * @param coins
 	 * @return
 	 */
-	public static double summe(ArrayList<Coin> coins) {
+	public static double sum(ArrayList<Coin> coins) {
 		double summe = .0;
 		for(Coin c : coins) 
 			summe += c.value;
@@ -70,7 +78,7 @@ public class CashDesk
 	 * @return
 	 */
 	public ArrayList<Coin> change(double summe) {
-		return alg.change(summe, container);
+		return algorithm.change(summe, container);
 	}
 
 	/**
@@ -78,6 +86,14 @@ public class CashDesk
 	 * @param array
 	 */
 	public void add(ArrayList<Coin> coins) {
+		for(Coin c : coins)
+			add(c, 1);
+	}
+	/**
+	 * 
+	 * @param array
+	 */
+	public void add(Coin ... coins) {
 		for(Coin c : coins)
 			add(c, 1);
 	}
@@ -100,6 +116,23 @@ public class CashDesk
 	public boolean remove(ArrayList<Coin> array) {
 		ArrayList<Coin> removed = new ArrayList<Coin>();
 		for(Coin coin : array) {
+			if(remove(coin, 1) == false) {
+				add(removed);
+				return false;
+			}
+			removed.add(coin);
+		}
+		return true;
+	}
+
+	/**
+	 * 
+	 * @param array
+	 * @return
+	 */
+	public boolean remove(Coin ... coins) {
+		ArrayList<Coin> removed = new ArrayList<Coin>();
+		for(Coin coin : coins) {
 			if(remove(coin, 1) == false) {
 				add(removed);
 				return false;
@@ -139,13 +172,6 @@ public class CashDesk
 	 */
 	@Override
 	public String toString() {
-		StringBuffer sbuf = new StringBuffer(256);
-		sbuf.append(String.format("Cash desk contains %n"));
-		sbuf.append(String.format("----------------------%n", revenue()));
-		for(Map.Entry<Coin, Integer> entry : container.entrySet())
-			sbuf.append(String.format("\t%-7s : %d %n", entry.getKey(), entry.getValue()));
-		sbuf.append(String.format("----------------------%n"));
-		sbuf.append(String.format("Revenue %.2f \u20AC %n", revenue()));
-		return sbuf.toString();
+		return CashdeskReport.toString(this);
 	}
 }
