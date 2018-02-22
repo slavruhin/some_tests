@@ -11,18 +11,18 @@ public class PrintedLogFile implements LogTarget {
 
 	@Override
 	public void save(String... lines) {
-		PrintWriter f = null;
+		PrintWriter out = null;
 		try {
-			f = new PrintWriter(new FileWriter(filename, true));
+			out = new PrintWriter(new FileWriter(filename, true));
 			for(String s : lines)
-				f.write(s);
+				out.write(s);
 		}
 		catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
 		finally {
-			if(f != null)
-				f.close();
+			if(out != null)
+				out.close();
 		}
 	}
 }

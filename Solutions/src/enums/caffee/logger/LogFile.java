@@ -3,27 +3,42 @@ package enums.caffee.logger;
 import java.io.*;
 
 public class LogFile implements LogTarget {
-	private String filename = "";
+	//private String filename = "";
+	
+	FileWriter out = null;
 
 	public LogFile(String filename) {
-		this.filename = filename;
-	}
-
-	@Override
-	public void save(String... lines) {
-
-		FileWriter f = null;
+		//this.filename = filename;
 		try {
-			f = new FileWriter(filename, true);
-			for(String s : lines)
-				f.write(s);
+			out = new FileWriter(filename, true);
 		}
 		catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
-		finally {
-			if(f != null)
-				try { f.close(); } catch ( IOException e ) { }
+	}
+
+	@Override
+	public void save(String... lines) {
+		try {
+			if(out != null)
+				for(String s : lines)
+					out.write(s);
+		}
+		catch (IOException e) {
+			System.out.println(e.getMessage());
+			try { 
+				if(out != null) 
+					out.close(); 
+			} 
+			catch ( IOException ex) {}
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+			try { 
+				if(out != null) 
+					out.close(); 
+			} 
+			catch ( IOException ex ) {}
 		}
 	}
 }

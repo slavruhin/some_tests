@@ -11,10 +11,9 @@ public class OutstreamFileLog implements LogTarget {
 
 	@Override
 	public void save(String... lines) {
-		FileOutputStream f = null;
 		OutputStreamWriter out = null;
 		try {
-			f = new FileOutputStream(new File(filename));
+			FileOutputStream f = new FileOutputStream(new File(filename));
 			out = new OutputStreamWriter(f);
 			for(String s : lines)
 				out.write(s);

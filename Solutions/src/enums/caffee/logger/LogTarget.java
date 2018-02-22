@@ -1,4 +1,4 @@
 package enums.caffee.logger;
 
 @FunctionalInterface
-interface LogTarget { void save(String ... lines); }
+public interface LogTarget { void save(String ... lines); }

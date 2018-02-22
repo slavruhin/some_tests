@@ -6,23 +6,26 @@ public class BufferedLogFile implements LogTarget {
 	private String filename = "";
 
 	public BufferedLogFile(String filename) {
-			this.filename = filename;
+		this.filename = filename;
 	}
 
 	@Override
 	public void save(String... lines) {
-
-		try( FileOutputStream fos = new FileOutputStream(new File(filename)) ) {
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-			for(String s : lines) {
-				bw.write(s);
-				//bw.newLine();
-			}
-			bw.close();
+		BufferedWriter out = null;
+		try {
+			out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(filename), true)));
+			for(String s : lines)
+				out.write(s);
 		}
-		catch (IOException e) 
-		{
-			System.out.println("Fehler beim Öffnen/Schreiben/Schliessen");
+		catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+		finally {
+			try { 
+				if(out != null) 
+					out.close();
+			} 
+			catch ( IOException e ) {}
 		}
 	}
 }
