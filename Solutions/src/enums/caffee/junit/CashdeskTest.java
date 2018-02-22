@@ -6,9 +6,80 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 import enums.caffee.*;
+import enums.caffee.logger.CashdeskLogger;
+import enums.caffee.logger.LogBuffer;
+import enums.caffee.logger.LogFile;
 
 class CashdeskTest {
 
+	@Test
+	void testPurchaseWithFileLogger() {
+		System.out.println("CashDeskTest.testPurchaseWithLogger()");
+		CashdeskLogger logger = new CashdeskLogger();
+		LogFile file = new LogFile("cashdesk.log");
+		logger.setTarget(file);
+
+		Cashdesk cashdesk = initCashDesc(10);
+
+		for(int x = 1; x < 4 ; ++x) {
+			for(Caffee caffee : Caffee.values()) {
+				// reinit cash desk with 10 coins for each type
+				cashdesk = initCashDesc(10);
+				logger.appendContainerState(cashdesk);
+
+				// incoming sequence of coins
+				ArrayList<Coin> coins = initCoinsArray(x);
+
+				// running 20 trying
+				for(int i = 0 ; i < 20 ; ++i) {
+					ArrayList<Coin> returned = cashdesk.purchase(coins, caffee);
+					if(Cashdesk.sum(coins) == Cashdesk.sum(returned))
+						break;
+					logger.appendPurchase(coins, caffee, returned);
+				}
+				//logger.appendContainerState(cashdesk);
+				logger.appendClearContainer(cashdesk.getCoins());
+			}
+		}
+	}
+
+	@Test
+	void testPurchaseWithBufferLogger() {
+		System.out.println("CashDeskTest.testPurchaseWithLogger()");
+		CashdeskLogger logger = new CashdeskLogger();
+		LogBuffer buffer = new LogBuffer();
+		logger.setTarget(buffer);
+
+		Cashdesk cashdesk = initCashDesc(10);
+		
+		for(int x = 1; x < 4 ; ++x) {
+			for(Caffee caffee : Caffee.values()) {
+				// reinit cash desk with 10 coins for each type
+				cashdesk = initCashDesc(10);
+				logger.appendContainerState(cashdesk);
+
+				// incoming sequence of coins
+				ArrayList<Coin> coins = initCoinsArray(x);
+
+				// running 20 trying
+				for(int i = 0 ; i < 20 ; ++i) {
+					ArrayList<Coin> returned = cashdesk.purchase(coins, caffee);
+					if(Cashdesk.sum(coins) == Cashdesk.sum(returned))
+						break;
+					logger.appendPurchase(coins, caffee, returned);
+				}
+				//logger.appendContainerState(cashdesk);
+				logger.appendClearContainer(cashdesk.getCoins());
+			}
+		}
+		
+		for(String s : buffer.getBuffer()) 
+			System.out.println(s);
+	}
+
+	
+	
+	
 	@Test
 	void testPurchase() {
 		System.out.println("CashDeskTest.testPurchase()");
@@ -17,7 +88,7 @@ class CashdeskTest {
 			System.out.println();
 			System.out.println();
 			Cashdesk cashdesk = initCashDesc(10);
-			System.out.println(CashdeskReport.toString(cashdesk));
+			System.out.println(CashdeskLogger.toString(cashdesk));
 			System.out.println();
 			ArrayList<Coin> coins = initCoinsArray(x);
 			for(int i = 0 ; i < 20 ; ++i) {
@@ -26,7 +97,7 @@ class CashdeskTest {
 					break;
 			}
 			System.out.println();
-			System.out.println(CashdeskReport.toString(cashdesk));
+			System.out.println(CashdeskLogger.toString(cashdesk));
 			System.out.println();
 		}
 	}
@@ -40,7 +111,7 @@ class CashdeskTest {
 	 */
 	static boolean startPurchase(Cashdesk cashdesk, ArrayList<Coin> incoming,  Caffee caffee) {
 
-		System.out.println("\tincoming : " + CashdeskReport.toString(incoming));
+		System.out.println("\tincoming : " + CashdeskLogger.toString(incoming));
 		ArrayList<Coin> coins = cashdesk.purchase(incoming, caffee);
 		if(Cashdesk.sum(coins) == Cashdesk.sum(incoming)) {
 			System.out.println("*** Not accepted. Break.");
@@ -48,7 +119,7 @@ class CashdeskTest {
 			return false;
 		}
 		System.out.println("*** Successful");
-		System.out.println("\treturned : " + CashdeskReport.toString(coins));
+		System.out.println("\treturned : " + CashdeskLogger.toString(coins));
 		System.out.println();
 		return true;
 	}
@@ -56,7 +127,6 @@ class CashdeskTest {
 	
 	@Test
 	void testSumme() {
-		System.out.println("CashDeskTest.testSumme()");
 		ArrayList<Coin> coins = new ArrayList<Coin>();
 		coins.add(Coin.ONE_CENT);
 		assertEquals(.01, Cashdesk.sum(coins));

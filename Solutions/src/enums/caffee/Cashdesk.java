@@ -40,6 +40,11 @@ public class Cashdesk
 	public void setCashChangeAlgorithm(CashChangable algorithm) {
 		this.algorithm = algorithm;
 	}
+	
+	public void clear() {
+		for(Coin coin : Coin.values())
+			container.put(coin, 0);
+	}
 
 	/**
 	 * 
@@ -184,6 +189,11 @@ public class Cashdesk
 	 */
 	@Override
 	public String toString() {
-		return CashdeskReport.toString(this);
+		StringBuffer sbuf = new StringBuffer(256);
+		sbuf.append(String.format("Cash desk contains: %n"));
+		for(Map.Entry<Coin, Integer> entry : container.entrySet())
+			sbuf.append(String.format("\t%-7s : %d piece(s)%n", entry.getKey(), entry.getValue()));
+		sbuf.append(String.format("tTotal %.2f \u20AC %n", revenue()));
+		return sbuf.toString();
 	}
 }
