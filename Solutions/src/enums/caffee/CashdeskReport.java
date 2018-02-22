@@ -7,10 +7,10 @@ public class CashdeskReport {
 	public static String toString(Cashdesk cashdesk) {
 		
 		StringBuffer sbuf = new StringBuffer(256);
-		sbuf.append(String.format("Cash desk contains %n"));
+		//sbuf.append(String.format("Cash desk contains %n"));
 		for(Map.Entry<Coin, Integer> entry : cashdesk.getContainerCopy().entrySet())
 			sbuf.append(String.format("\t%-7s : %d piece(s)%n", entry.getKey(), entry.getValue()));
-		sbuf.append(String.format("Total %.2f \u20AC %n", cashdesk.revenue()));
+		sbuf.append(String.format("\tTotal %.2f \u20AC %n", cashdesk.revenue()));
 		return sbuf.toString();
 	}
 

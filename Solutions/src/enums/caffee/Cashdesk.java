@@ -166,6 +166,18 @@ public class Cashdesk
 			ret += entry.getKey().value * entry.getValue();
 		return ret;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<Coin> getCoins() {
+		ArrayList<Coin> coins = new ArrayList<Coin>();
+		for(Map.Entry<Coin, Integer> entry : container.entrySet())
+			for(int i = 0 ; i < entry.getValue() ; ++i)
+				coins.add(entry.getKey());
+		return coins;
+	}
 
 	/**
 	 * 
