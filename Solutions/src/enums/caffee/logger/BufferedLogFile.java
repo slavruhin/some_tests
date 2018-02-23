@@ -3,29 +3,51 @@ package enums.caffee.logger;
 import java.io.*;
 
 public class BufferedLogFile implements LogTarget {
-	private String filename = "";
+	String filename = "";
+	boolean append = true;
+	BufferedWriter out = null;
 
 	public BufferedLogFile(String filename) {
+		open(filename); 
+	}
+
+	@Override
+	public boolean open(String filename) {
+		try {
+			out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(filename), append)));
+		} catch (FileNotFoundException e) {
+			System.err.println(e.getMessage());
+			return false;
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			return false;
+		}
 		this.filename = filename;
+		return true;
 	}
 
 	@Override
 	public void save(String... lines) {
-		BufferedWriter out = null;
 		try {
-			out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(filename), true)));
-			for(String s : lines)
-				out.write(s);
+			if(out != null || (out == null && open(filename)) ) {
+				for(String s : lines)
+					out.write(s);
+				out.flush();
+			}
+		} catch (IOException e) {
+			System.err.println(e.getMessage());
+		} catch (Exception e ) {
+			System.err.println(e.getMessage());
 		}
-		catch (IOException e) {
-			System.out.println(e.getMessage());
-		}
-		finally {
-			try { 
-				if(out != null) 
-					out.close();
-			} 
-			catch ( IOException e ) {}
+	}
+
+	@Override
+	public void close() {
+		try {
+			if(out != null)
+				out.close();
+		} catch (IOException e) {
+			System.err.println(e.getMessage());
 		}
 	}
 }

@@ -6,6 +6,7 @@ import enums.caffee.Caffee;
 import enums.caffee.Cashdesk;
 import enums.caffee.Coin;
 
+import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.*;
 
@@ -13,6 +14,18 @@ import java.time.format.*;
 
 public class CashdeskLogger {
 	
+	public static String generateFilenamePrefix() {
+	    return new SimpleDateFormat("yyyy_MM_dd_").format(new Date());
+	}
+	
+	public static String generateFilename(String logdir, String filename) {
+		// todo : create directory
+		if(!logdir.isEmpty())
+			logdir += "/";
+	    return logdir + generateFilenamePrefix() + filename;
+	}
+	
+
 	private LogTarget target = null; //new LogBuffer();
 	public void setTarget(LogTarget target) {
 		this.target = target;

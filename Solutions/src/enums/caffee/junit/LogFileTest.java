@@ -1,71 +1,76 @@
 package enums.caffee.junit;
 
 
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import enums.caffee.logger.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 class LogFileTest {
 	
-	private final String[] lines = { "some line", "---------" };
-	
-	@Before 
-	public void deleteTestfiles() {
-		String[] files = { 
-			"logfile_standard.log", 
-			"logfile_printed.log", 
-			"logfile_outstream.log", 
-			"logfile_outstream.log"
-		};
-		for( String filename : files ) {
-			File file = new File(filename);
-			if(file.exists())
-				file.delete();
-		}
+	private final String[] lines = { 
+		"some line", 
+		"---------" 
+	};
+
+	private String generateLogPrefix() {
+	    return new SimpleDateFormat("yyyy_MM_dd").format(new Date());
 	}
 
-	@Test
-	void testLogFile() {
-		String filename = "logfile_standard.log";
-		LogTarget logger = new LogFile(filename);
-		for(int i = 0; i < 1000; ++i)
-			logger.save(lines);
-		assertEquals(0, getFileLength(filename) % 18000);
-	}
-
-	@Test
-	void testPrintedLogFile() {
-		String filename = "logfile_printed.log";
-		LogTarget logger = new PrintedLogFile(filename);
-		for(int i = 0; i < 1000; ++i)
-			logger.save(lines);
-		assertEquals(0, getFileLength(filename) % 18000);
-	}
-
-	@Test
-	void testBufferedLogFile() {
-		String filename = "logfile_buffered.log";
-		LogTarget logger = new BufferedLogFile(filename);
-		for(int i = 0; i < 1000; ++i)
-			logger.save(lines);
-		assertEquals(0, getFileLength(filename) % 18000);
-	}
-
-	@Test
-	void testOutstreamLogFile() {
-		String filename = "logfile_outstream.log";
-		LogTarget logger = new OutstreamFileLog(filename);
-		for(int i = 0; i < 1000; ++i)
-			logger.save(lines);
-		assertEquals(0, getFileLength(filename) % 18000);
-	}
-	
 	private long getFileLength(String filename) {
         File file = new File(filename);
         return file.exists() ? file.length() : -1;
 	}
+
+	private void deleteFile(String filename) {
+		File f = new File(filename);
+		if(f.exists())
+			f.delete();
+	}
+
+	@Test
+	void testLogFile() {
+		String filename = generateLogPrefix() + "_logfile_standard.log";
+		LogTarget logger = new LogFile(filename);
+		for(int i = 0; i < 1000; ++i)
+			logger.save(lines);
+		logger.close();
+		assertEquals(0, getFileLength(filename) % 18000);
+		deleteFile(filename);
+	}
+
+	@Test
+	void testPrintedLogFile() {
+		String filename = generateLogPrefix() + "_logfile_printed.log";
+		LogTarget logger = new PrintedLogFile(filename);
+		for(int i = 0; i < 1000; ++i)
+			logger.save(lines);
+		assertEquals(0, getFileLength(filename) % 18000);
+		deleteFile(filename);
+	}
+
+	@Test
+	void testBufferedLogFile() {
+		String filename = generateLogPrefix() + "_logfile_buffered.log";
+		LogTarget logger = new BufferedLogFile(filename);
+		for(int i = 0; i < 1000; ++i)
+			logger.save(lines);
+		assertEquals(0, getFileLength(filename) % 18000);
+		deleteFile(filename);
+	}
+
+	@Test
+	void testOutstreamLogFile() {
+		String filename = generateLogPrefix() + "_logfile_outstream.log";
+		LogTarget logger = new OutstreamFileLog(filename);
+		for(int i = 0; i < 1000; ++i)
+			logger.save(lines);
+		assertEquals(0, getFileLength(filename) % 18000);
+		deleteFile(filename);
+	}
+	
 }

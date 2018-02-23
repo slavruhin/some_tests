@@ -12,12 +12,12 @@ public enum Coin {
 	FIVE_CENTS   (0.05),
 	TWO_CENTS    (0.02),
 	ONE_CENT     (0.01);
-	
+
 	/**
 	 * 
 	 */
 	public final double value;
-	
+
 	/**
 	 * 
 	 * @param value
@@ -25,7 +25,7 @@ public enum Coin {
 	private Coin(double value) { 
 		this.value = value; 
 	}
-	
+
 	/**
 	 * 
 	 */

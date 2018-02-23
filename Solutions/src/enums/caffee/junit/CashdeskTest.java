@@ -16,7 +16,7 @@ class CashdeskTest {
 	void testPurchaseWithFileLogger() {
 		System.out.println("CashDeskTest.testPurchaseWithLogger()");
 		CashdeskLogger logger = new CashdeskLogger();
-		LogFile file = new LogFile("cashdesk.log");
+		LogFile file = new LogFile(CashdeskLogger.generateFilename("", "cashdesk.log"));
 		logger.setTarget(file);
 
 		Cashdesk cashdesk = initCashDesc(10);

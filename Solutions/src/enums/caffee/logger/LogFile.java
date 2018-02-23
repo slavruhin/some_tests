@@ -3,42 +3,51 @@ package enums.caffee.logger;
 import java.io.*;
 
 public class LogFile implements LogTarget {
-	//private String filename = "";
-	
+	String filename = "";
+	boolean append = true;
 	FileWriter out = null;
 
 	public LogFile(String filename) {
-		//this.filename = filename;
+		open(filename); 
+	}
+	
+	@Override
+	public boolean open(String filename) { //throws FileNotFoundException, IOException  {
 		try {
 			out = new FileWriter(filename, true);
+		} catch (FileNotFoundException e) {
+			System.err.println(e.getMessage());
+			return false;
+		} catch (IOException e) {
+			System.err.println(e.getMessage());
+			return false;
 		}
-		catch (IOException e) {
-			System.out.println(e.getMessage());
+		this.filename = filename;
+		return true;
+	}
+	
+	@Override
+	public void save(String... lines) {
+		try {
+			if(out != null || (out == null && open(filename)) ) {
+				for(String s : lines)
+					out.write(s);
+				out.flush();
+			}
+		} catch (IOException e) {
+			System.err.println(e.getMessage());
+		} catch (Exception e ) {
+			System.err.println(e.getMessage());
 		}
 	}
 
 	@Override
-	public void save(String... lines) {
+	public void close() {
 		try {
 			if(out != null)
-				for(String s : lines)
-					out.write(s);
-		}
-		catch (IOException e) {
-			System.out.println(e.getMessage());
-			try { 
-				if(out != null) 
-					out.close(); 
-			} 
-			catch ( IOException ex) {}
-		}
-		catch (Exception e) {
-			System.out.println(e.getMessage());
-			try { 
-				if(out != null) 
-					out.close(); 
-			} 
-			catch ( IOException ex ) {}
+				out.close();
+		} catch (IOException e) {
+			System.err.println(e.getMessage());
 		}
 	}
 }
