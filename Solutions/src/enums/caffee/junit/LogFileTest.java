@@ -1,14 +1,14 @@
 package enums.caffee.junit;
 
 
+import java.io.*;
+import java.text.*;
+import java.util.*;
 import org.junit.jupiter.api.Test;
 import enums.caffee.logger.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 class LogFileTest {
 	
@@ -53,6 +53,15 @@ class LogFileTest {
 		deleteFile(filename);
 	}
 
+	@Test
+	void testCacchedLogFile() {
+		String filename = generateLogPrefix() + "_logfile_cached.log";
+		LogTarget logger = new CachedLogFile(filename);
+		for(int i = 0; i < 1000; ++i)
+			logger.save(lines);
+		assertEquals(0, getFileLength(filename) % 18000);
+		deleteFile(filename);
+	}
 	@Test
 	void testBufferedLogFile() {
 		String filename = generateLogPrefix() + "_logfile_buffered.log";
