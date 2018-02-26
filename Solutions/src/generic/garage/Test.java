@@ -16,7 +16,11 @@ public class Test {
 		lkwGarage.reinfahren(lkw);
 		//lkwGarage.reinfahren(pkw);
 
-		//lkwGarage.reinfahren(new Object());
+		
+		// using class Garage<T> instead class Garage<T extends Fahrzeug>
+		//Garage<Fahrzeug> univGarage = new Garage<Fahrzeug>();
+		//univGarage.reinfahren(lkw);
+		//univGarage.reinfahren(pkw);
 	}
 
 }

@@ -8,6 +8,7 @@ class LKW implements Fahrzeug {
 }
 
 
+//public class Garage<T> {
 public class Garage<T extends Fahrzeug> {
 	private T fahrzeug;
 	
