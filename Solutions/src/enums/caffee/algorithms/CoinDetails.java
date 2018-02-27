@@ -7,16 +7,67 @@ import enums.caffee.*;
 public class CoinDetails {
 	public int limit = 20;
 	
-//	class CoinsCounter {
-//		int twoEuros    = 0;
-//		int oneEuros    = 0;
-//		int fivtyCents  = 0;
-//		int twentyCents = 0;
-//		int tenCents    = 0;
-//		int fiveCents   = 0;
-//		int twoCents    = 0;
-//		int oneCent     = 0;
-//	}
+	class CoinsCounter {
+		int twoEuros    = 0;
+		int oneEuros    = 0;
+		int fivtyCents  = 0;
+		int twentyCents = 0;
+		int tenCents    = 0;
+		int fiveCents   = 0;
+		int twoCents    = 0;
+		int oneCent     = 0;
+		
+		public CoinsCounter() {}
+
+		public CoinsCounter(ArrayList<Coin> coins) {
+			for(Coin c : coins) {
+				switch (c) {
+					case TWO_EUROS:
+						twoEuros++;
+						break;
+					case ONE_EURO:
+						oneEuros++;
+						break;
+					case FIFTY_CENTS:
+						fivtyCents++;
+						break;
+					case TWENTY_CENTS:
+						twentyCents++;
+						break;
+					case TEN_CENTS:
+						tenCents++;
+						break;
+					case FIVE_CENTS:
+						fiveCents++;
+						break;
+					case TWO_CENTS:
+						twoCents++;
+						break;
+					case ONE_CENT:
+						oneCent++;
+						break;
+					default:
+						break;
+				}
+			}
+		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			if(! (obj instanceof CoinsCounter))
+				return false;
+
+			CoinsCounter c = (CoinsCounter)obj;
+			return 	twoEuros == c.twoEuros       &&
+					oneEuros    == c.oneEuros    &&
+					fivtyCents  == c.fivtyCents  &&
+					twentyCents == c.twentyCents &&
+					tenCents    == c.tenCents    &&
+					fiveCents   == c.fiveCents   &&
+					twoCents    == c.twoCents    &&
+					oneCent     == c.oneCent;
+		}
+	}
 	
 	class CoinChanger {
 		public final Coin coin;
