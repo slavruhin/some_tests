@@ -126,5 +126,4 @@ class IntMatrixTest {
 		System.out.println(matrix.transpose());
 		System.out.println();
 	}
-
 }
