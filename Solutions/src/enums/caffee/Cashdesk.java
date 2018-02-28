@@ -1,8 +1,7 @@
 package enums.caffee;
 
 import java.util.*;
-
-import enums.caffee.algorithms.DefaultCashChangeAlgorithm;
+import enums.caffee.algorithms.*;
 
 /**
  * 

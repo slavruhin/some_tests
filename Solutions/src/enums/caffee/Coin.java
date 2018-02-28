@@ -1,7 +1,5 @@
 package enums.caffee;
 
-//import java.util.Comparator;
-
 public enum Coin {
 
 	TWO_EUROS    (2.00),
