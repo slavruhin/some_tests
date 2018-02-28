@@ -10,8 +10,6 @@ import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.*;
 
-
-
 public class CashdeskLogger {
 	
 	public static String generateFilenamePrefix() {

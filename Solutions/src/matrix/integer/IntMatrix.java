@@ -10,7 +10,7 @@ interface IntOperation {
 }
 
 /**
- * @author slavruhin-ronn
+ * @author S.Lavruhin-Ronn
  *
  */
 public class IntMatrix {

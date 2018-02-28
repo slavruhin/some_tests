@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 import enums.caffee.*;
+import enums.caffee.algorithms.LimittedCointChangeAlgorithm;
 import enums.caffee.logger.CashdeskLogger;
 //import enums.caffee.logger.LogBuffer;
 import enums.caffee.logger.LogFile;
@@ -42,65 +43,29 @@ class CashdeskTest {
 			}
 		}
 	}
-
-//	@Test
-//	void testPurchaseWithBufferLogger() {
-//		System.out.println("CashDeskTest.testPurchaseWithLogger()");
-//		CashdeskLogger logger = new CashdeskLogger();
-//		LogBuffer buffer = new LogBuffer();
-//		logger.setTarget(buffer);
-//
-//		Cashdesk cashdesk = initCashDesc(10);
-//		
-//		for(int x = 1; x < 4 ; ++x) {
-//			for(Caffee caffee : Caffee.values()) {
-//				// reinit cash desk with 10 coins for each type
-//				cashdesk = initCashDesc(10);
-//				logger.appendContainerState(cashdesk);
-//
-//				// incoming sequence of coins
-//				ArrayList<Coin> coins = initCoinsArray(x);
-//
-//				// running 20 trying
-//				for(int i = 0 ; i < 20 ; ++i) {
-//					ArrayList<Coin> returned = cashdesk.purchase(coins, caffee);
-//					if(Cashdesk.sum(coins) == Cashdesk.sum(returned))
-//						break;
-//					logger.appendPurchase(coins, caffee, returned);
-//				}
-//				//logger.appendContainerState(cashdesk);
-//				logger.appendClearContainer(cashdesk.getCoins());
-//			}
-//		}
-//		
-//		for(String s : buffer.getBuffer()) 
-//			System.out.println(s);
-//	}
-//
-//	
-//	
-//	
-//	@Test
-//	void testPurchase() {
-//		System.out.println("CashDeskTest.testPurchase()");
-//		
-//		for(int x = 1; x < 4 ; ++x) {
-//			System.out.println();
-//			System.out.println();
-//			Cashdesk cashdesk = initCashDesc(10);
-//			System.out.println(CashdeskLogger.toString(cashdesk));
-//			System.out.println();
-//			ArrayList<Coin> coins = initCoinsArray(x);
-//			for(int i = 0 ; i < 20 ; ++i) {
-//				System.out.println(String.format("Trying %d.%2d [ purchase a %s ]", x, i, Caffee.CAPPUCCINO));
-//				if(startPurchase(cashdesk, coins,  Caffee.CAPPUCCINO) == false)
-//					break;
-//			}
-//			System.out.println();
-//			System.out.println(CashdeskLogger.toString(cashdesk));
-//			System.out.println();
-//		}
-//	}
+	
+	@Test
+	void testPurchaseLimittedAlg() {
+		System.out.println("CashDeskTest.testPurchaseLimittedAlg()");
+		
+		for(int x = 1; x < 4 ; ++x) {
+			System.out.println();
+			System.out.println();
+			Cashdesk cashdesk = initCashDesc(10);
+			cashdesk.setCashChangeAlgorithm(new LimittedCointChangeAlgorithm());
+			System.out.println(CashdeskLogger.toString(cashdesk));
+			System.out.println();
+			ArrayList<Coin> coins = initCoinsArray(x);
+			for(int i = 0 ; i < 50 ; ++i) {
+				System.out.println(String.format("Trying %d.%2d [ purchase a %s ]", x, i, Caffee.CAPPUCCINO));
+				if(startPurchase(cashdesk, coins,  Caffee.CAPPUCCINO) == false)
+					break;
+			}
+			System.out.println();
+			System.out.println(CashdeskLogger.toString(cashdesk));
+			System.out.println();
+		}
+	}
 
 	/**
 	 * helper function to test purchase
@@ -120,6 +85,7 @@ class CashdeskTest {
 		}
 		System.out.println("*** Successful");
 		System.out.println("\treturned : " + CashdeskLogger.toString(coins));
+		System.out.println(cashdesk);
 		System.out.println();
 		return true;
 	}

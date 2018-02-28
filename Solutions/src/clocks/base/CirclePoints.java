@@ -6,7 +6,7 @@ package clocks.base;
 import java.util.*;
 
 /**
- * @author slavruhin-ronn
+ * @author S.Lavruhin-Ronn
  *
  */
 public class CirclePoints {

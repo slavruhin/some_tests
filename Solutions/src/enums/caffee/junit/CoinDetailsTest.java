@@ -12,18 +12,18 @@ import enums.caffee.algorithms.*;
 import enums.caffee.logger.*;
 
 /**
- * @author slavruhin-ronn
+ * @author S.Lavruhin-Ronn
  *
  */
 class CoinDetailsTest {
 
 	/**
-	 * Test method for {@link enums.caffee.algorithms.CoinDetails#change(enums.caffee.Coin)}.
+	 * Test method for {@link enums.caffee.algorithms.CoinChangeDetails#change(enums.caffee.Coin)}.
 	 */
 	@Test
 	void testChangeInPosition() {
 		
-		CoinDetails details = new CoinDetails();
+		CoinChangeDetails details = new CoinChangeDetails();
 		ArrayList<Coin> sequence = new ArrayList<Coin>();
 		sequence.add(Coin.ONE_CENT);
 		sequence.add(Coin.TWO_EUROS);
@@ -38,12 +38,12 @@ class CoinDetailsTest {
 	}
 
 	/**
-	 * Test method for {@link enums.caffee.algorithms.CoinDetails#change(enums.caffee.Coin)}.
+	 * Test method for {@link enums.caffee.algorithms.CoinChangeDetails#change(enums.caffee.Coin)}.
 	 */
 	@Test
 	void testChangeCurrentTraverse() {
 		
-		CoinDetails details = new CoinDetails();
+		CoinChangeDetails details = new CoinChangeDetails();
 		ArrayList<Coin> sequence = new ArrayList<Coin>();
 		sequence.add(Coin.TWO_EUROS);
 		sequence.add(Coin.TWO_EUROS);
@@ -55,12 +55,12 @@ class CoinDetailsTest {
 	}
 
 	/**
-	 * Test method for {@link enums.caffee.algorithms.CoinDetails#change(enums.caffee.Coin)}.
+	 * Test method for {@link enums.caffee.algorithms.CoinChangeDetails#change(enums.caffee.Coin)}.
 	 */
 	@Test
 	void testChangeCurrentTraverseLimitted() {
 		
-		CoinDetails details = new CoinDetails();
+		CoinChangeDetails details = new CoinChangeDetails();
 		ArrayList<Coin> sequence = new ArrayList<Coin>();
 		sequence.add(Coin.TWO_EUROS);
 		sequence.add(Coin.TWO_EUROS);

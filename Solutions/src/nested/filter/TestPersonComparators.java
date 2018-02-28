@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Top-levels comparators
  * 
- * @author slavruhin-ronn
+ * @author S.Lavruhin-Ronn
  *
  */
 // Local filter 1:
@@ -46,7 +46,7 @@ class TopLevelFilterMultifilterUp implements Comparator<Person> {
 
 /**
  * 
- * @author slavruhin-ronn
+ * @author S.Lavruhin-Ronn
  *
  */
 public class TestPersonComparators {

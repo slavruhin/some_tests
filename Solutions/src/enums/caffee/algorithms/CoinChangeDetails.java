@@ -1,74 +1,100 @@
 package enums.caffee.algorithms;
 
-import java.awt.Container;
 import java.util.*;
 import enums.caffee.*;
 
-public class CoinDetails {
-	public int limit = 20;
+/**
+ * 
+ * @author S.Lavruhin-Ronn
+ *
+ */
+class CoinsCounter {
+	int twoEuros    = 0;
+	int oneEuros    = 0;
+	int fivtyCents  = 0;
+	int twentyCents = 0;
+	int tenCents    = 0;
+	int fiveCents   = 0;
+	int twoCents    = 0;
+	int oneCent     = 0;
 	
-	class CoinsCounter {
-		int twoEuros    = 0;
-		int oneEuros    = 0;
-		int fivtyCents  = 0;
-		int twentyCents = 0;
-		int tenCents    = 0;
-		int fiveCents   = 0;
-		int twoCents    = 0;
-		int oneCent     = 0;
-		
-		public CoinsCounter() {}
+	public CoinsCounter() {}
 
-		public CoinsCounter(ArrayList<Coin> coins) {
-			for(Coin c : coins) {
-				switch (c) {
-					case TWO_EUROS:
-						twoEuros++;
-						break;
-					case ONE_EURO:
-						oneEuros++;
-						break;
-					case FIFTY_CENTS:
-						fivtyCents++;
-						break;
-					case TWENTY_CENTS:
-						twentyCents++;
-						break;
-					case TEN_CENTS:
-						tenCents++;
-						break;
-					case FIVE_CENTS:
-						fiveCents++;
-						break;
-					case TWO_CENTS:
-						twoCents++;
-						break;
-					case ONE_CENT:
-						oneCent++;
-						break;
-					default:
-						break;
-				}
+	public CoinsCounter(ArrayList<Coin> coins) {
+		for(Coin c : coins) {
+			switch (c) {
+				case TWO_EUROS:
+					twoEuros++;
+					break;
+				case ONE_EURO:
+					oneEuros++;
+					break;
+				case FIFTY_CENTS:
+					fivtyCents++;
+					break;
+				case TWENTY_CENTS:
+					twentyCents++;
+					break;
+				case TEN_CENTS:
+					tenCents++;
+					break;
+				case FIVE_CENTS:
+					fiveCents++;
+					break;
+				case TWO_CENTS:
+					twoCents++;
+					break;
+				case ONE_CENT:
+					oneCent++;
+					break;
+				default:
+					break;
 			}
-		}
-		
-		@Override
-		public boolean equals(Object obj) {
-			if(! (obj instanceof CoinsCounter))
-				return false;
-
-			CoinsCounter c = (CoinsCounter)obj;
-			return 	twoEuros == c.twoEuros       &&
-					oneEuros    == c.oneEuros    &&
-					fivtyCents  == c.fivtyCents  &&
-					twentyCents == c.twentyCents &&
-					tenCents    == c.tenCents    &&
-					fiveCents   == c.fiveCents   &&
-					twoCents    == c.twoCents    &&
-					oneCent     == c.oneCent;
 		}
 	}
 	
+	public CoinsCounter(TreeMap<Coin, Integer> container) {
+		twoEuros    = container.get(Coin.TWO_EUROS).intValue();
+		oneEuros    = container.get(Coin.ONE_EURO).intValue();
+		fivtyCents  = container.get(Coin.FIFTY_CENTS).intValue();
+		twentyCents = container.get(Coin.TWENTY_CENTS).intValue();
+		tenCents    = container.get(Coin.TEN_CENTS).intValue();
+		fiveCents   = container.get(Coin.FIVE_CENTS).intValue();
+		twoCents    = container.get(Coin.TWO_CENTS).intValue();
+		oneCent     = container.get(Coin.ONE_CENT).intValue();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(! (obj instanceof CoinsCounter))
+			return false;
+
+		CoinsCounter c = (CoinsCounter)obj;
+		return 	twoEuros == c.twoEuros       &&
+				oneEuros    == c.oneEuros    &&
+				fivtyCents  == c.fivtyCents  &&
+				twentyCents == c.twentyCents &&
+				tenCents    == c.tenCents    &&
+				fiveCents   == c.fiveCents   &&
+				twoCents    == c.twoCents    &&
+				oneCent     == c.oneCent;
+	}
+}
+
+/**
+ * 
+ * @author S.Lavruhin-Ronn
+ *
+ */
+public class CoinChangeDetails {
+	//public int limit = 20;
+	
+
+	/**
+	 * 
+	 * @author S.Lavruhin-Ronn
+	 *
+	 */
 	class CoinChanger {
 		public final Coin coin;
 		public final ArrayList<Coin> array;
@@ -81,7 +107,10 @@ public class CoinDetails {
 					array.add(c);
 		}
 	}
-	
+
+	/**
+	 * 
+	 */
 	private TreeMap<Coin, CoinChanger> container = new TreeMap<Coin, CoinChanger>();
 	{
 		container.put(Coin.ONE_CENT,     new CoinChanger(Coin.ONE_CENT));
@@ -94,15 +123,6 @@ public class CoinDetails {
 		container.put(Coin.TWO_EUROS,    new CoinChanger(Coin.TWO_EUROS,     Coin.ONE_EURO,     Coin.ONE_EURO));
 	}
 
-	/**
-	 * 
-	 * @param coin
-	 * @return
-	 */
-	//public ArrayList<ArrayList<Coin>> change(Coin coin) {
-	//}
-
-	
 	/**
 	 * 
 	 * @param coins
