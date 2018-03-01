@@ -27,7 +27,7 @@ public class LogFile implements LogTarget {
 	}
 	
 	@Override
-	public void save(String... lines) {
+	public void save(String ... lines) {
 		try {
 			if(out != null || (out == null && open(filename)) ) {
 				for(String s : lines)

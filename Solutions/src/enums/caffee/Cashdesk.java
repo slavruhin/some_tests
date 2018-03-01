@@ -71,7 +71,7 @@ public class Cashdesk
 	 * @param coins
 	 * @return
 	 */
-	public static double sum(ArrayList<Coin> coins) {
+	public static double sum(Collection<Coin> coins) {
 		double summe = .0;
 		for(Coin c : coins) 
 			summe += c.value;
@@ -91,7 +91,7 @@ public class Cashdesk
 	 * 
 	 * @param array
 	 */
-	public void add(ArrayList<Coin> coins) {
+	public void add(Collection<Coin> coins) {
 		for(Coin c : coins)
 			add(c, 1);
 	}

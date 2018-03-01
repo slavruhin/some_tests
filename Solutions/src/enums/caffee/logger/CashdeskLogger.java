@@ -39,7 +39,15 @@ public class CashdeskLogger {
 		return formatterDatetime.format(ZonedDateTime.now());
 	}
 
-	public void appendPurchase(String message) {
+	public void append(String head, String ... messages) {
+		String[] lines = new String[messages.length + 1];
+		lines[0] = String.format("%s [%s] %n", CurrentDate(), head);
+		for(int i = 0 ; i < messages.length ; ++i)
+			lines[i + 1] = String.format("\t %s %n", messages[i]);
+		add(lines);
+	}
+
+	public void append(String message) {
 		String[] lines = { 
 			String.format("%s [message] %n", CurrentDate()), 
 			String.format("\t %s %n", message)
@@ -47,7 +55,7 @@ public class CashdeskLogger {
 		add(lines);
 	}	
 
-	public void appendPurchase(ArrayList<Coin> incoming, Caffee caffee, ArrayList<Coin> returned) {
+	public void appendPurchase(Collection<Coin> incoming, Caffee caffee, Collection<Coin> returned) {
 		String[] lines = { 
 			String.format("%s [purchase] %n", CurrentDate()), 
 			String.format("\t incoming     : %s %n", toString(incoming)),
@@ -57,7 +65,7 @@ public class CashdeskLogger {
 		add(lines);
 	}
 
-	public void appendAppendContainer(ArrayList<Coin> incoming) {
+	public void appendAppendContainer(Collection<Coin> incoming) {
 		String[] lines = { 
 				String.format("%s [append] %n", CurrentDate()), 
 				String.format("\t incoming : %s %n", toString(incoming)),
@@ -65,7 +73,7 @@ public class CashdeskLogger {
 		add(lines);
 	}
 
-	public void appendClearContainer(ArrayList<Coin> removed) {
+	public void appendClearContainer(Collection<Coin> removed) {
 		String[] lines = { 
 				String.format("%s [clear] %n", CurrentDate()), 
 				String.format("\t removed  : %s %n", toString(removed)),
@@ -90,10 +98,10 @@ public class CashdeskLogger {
 		return sbuf.toString();
 	}
 
-	public static String toString(ArrayList<Coin> coins) {
+	public static String toString(Collection<Coin> coins) {
 		StringBuffer sbuf = new StringBuffer(256);
 		for(Coin c : coins)
 			sbuf.append(String.format("%.2f  ", c.value));
-		return String.format("%.2f \u20AC -> %d coins (%s)", Cashdesk.sum(coins), coins.size(), sbuf.toString().trim());
+		return String.format("%.2f \u20AC -> %3d coins (%s)", Cashdesk.sum(coins), coins.size(), sbuf.toString().trim());
 	}
 }
