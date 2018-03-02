@@ -311,4 +311,5 @@ public class CoinCounter implements Comparable<CoinCounter>{
 	public int compareTo(CoinCounter o) {
 		return comparator.compare(this, o);
 	}
+
 }

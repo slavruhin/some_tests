@@ -1,5 +1,10 @@
 package enums.caffee;
 
+/**
+ * 
+ * @author S.Lavruhin-Ronn
+ *
+ */
 public enum Coin {
 
 	TWO_EUROS    (2.00),
