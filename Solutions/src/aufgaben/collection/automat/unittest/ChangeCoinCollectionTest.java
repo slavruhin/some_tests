@@ -12,22 +12,59 @@ class ChangeCoinCollectionTest {
 		DefaultChangeCoinCollection changer = new DefaultChangeCoinCollection(new CoinCounter(10));
 
 		int sum = 234;
-		Collection<Coin> coins = changer.generate(sum);
+		Collection<Coin> coins = changer.change(sum);
 		CoinCounter counter = new CoinCounter(coins);
 		System.out.println(counter);
 		assertEquals(sum, counter.sum());
 
 		sum = 23488;
-		coins = changer.generate(sum);
+		coins = changer.change(sum);
 		counter = new CoinCounter(coins);
 		System.out.println(counter);
 		assertEquals(0, counter.sum());
 	}
 
 	@Test
-	void testGenerate() {
+	void testGenerateDefaultCollection() {
+		DefaultChangeCoinCollection changer = new DefaultChangeCoinCollection(new CoinCounter(10));
+		Collection<Coin> coins = changer.change(148);
+		System.out.println(coins.size());
+		String s = "";
+		for(Coin c : coins)
+			s += c.toString() + " ";
+		System.out.println(s);
+	}
+	
+	@Test
+	void testChangeMapping() {
+		for(Coin coin : Coin.values()) {
+			Collection<Coin> changed = MapCoinChanger.get(coin);
+			assertNotNull(changed);
+			String s = "";
+			for(Coin c : changed)
+				s += c.toString() + " ";
+			System.out.println(s);
+		}
+	}
+	
+	
+
+	@Test
+	void testGenerateExtendedCollection() {
+		ExtendChangeCoinCollection changer = new ExtendChangeCoinCollection(new CoinCounter(10));
+		Collection<Coin> coins = changer.change(148);
+		System.out.println(coins.size());
+		String s = "";
+		for(Coin c : coins)
+			s += c.toString() + " ";
+		System.out.println(s);
 		
-		
-		fail("Not yet implemented");
+		Collection<Collection<Coin>> sequences = changer.changeTraverse(coins);
+		for(Collection<Coin> seq : sequences) {
+			s = "";
+			for(Coin c : seq)
+				s += c.toString() + " ";
+			System.out.println(s);
+		}
 	}
 }

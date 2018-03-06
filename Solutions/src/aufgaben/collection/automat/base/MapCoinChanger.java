@@ -1,7 +1,6 @@
-package enums.caffee.algorithms.base;
+package aufgaben.collection.automat.base;
 
 import java.util.*;
-import enums.caffee.*;
 
 public class MapCoinChanger {
 	private static Map<Coin, Collection<Coin>> map = new TreeMap<Coin, Collection<Coin>>();
@@ -17,7 +16,7 @@ public class MapCoinChanger {
 	}
 	
 	private static Collection<Coin> toCollection(Coin[] array) {
-		return (Collection<Coin>)new ArrayList<Coin>(Arrays.asList(array));
+		return new ArrayList<Coin>(Arrays.asList(array));
 	}
 	
 	public static Collection<Coin> get(Coin coin) {

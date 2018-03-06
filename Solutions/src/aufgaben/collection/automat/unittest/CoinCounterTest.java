@@ -185,6 +185,7 @@ class CoinCounterTest {
 		{
 			CoinCounter x = new CoinCounter();
 			CoinCounter y = (CoinCounter)x.clone();
+
 			assertFalse(  x == y);
 			assertTrue(  x.equals(y));
 		} 
@@ -198,6 +199,7 @@ class CoinCounterTest {
 	void testToString() {
 		CoinCounter c = new CoinCounter(10);
 		String s = c.toString();
+
 		assertTrue( s.contains("2,00 €  :  10 piece(s)"));
 		assertTrue( s.contains("1,00 €  :  10 piece(s)"));
 		assertTrue( s.contains("0,50 €  :  10 piece(s)"));

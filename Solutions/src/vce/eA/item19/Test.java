@@ -20,10 +20,12 @@ class Bar extends Foo {
 
 public class Test {
 
-	public static void main(String[] args) {
+	public static void main(String... args) {
+		
+		
+	//public static void main(String[] args) {
 		Foo f = new Bar();
 		f.addFive();
 		System.out.println(f.a);
 	}
-
 }
