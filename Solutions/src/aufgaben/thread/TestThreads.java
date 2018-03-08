@@ -29,20 +29,23 @@ class RandomGenerator implements Runnable {
 class Counter implements Runnable {
 	@Override
 	public void run() {
+		Object monitor = Counter.class;
+
 		for(int i = 0 ; i < 1000000; ++i) 
-			synchronized(TestThreads.num) {
+			synchronized(monitor) {
 				TestThreads.num++;
 			}
 	}
 }
 
+
 public class TestThreads {
-	static volatile Integer num = 0;
+	static int num = 0;
 	static final int[] array = new int[100];
 
 	public static void main(String[] args) {
 		//-----------------------------------------------------------
-		// test 1:
+		// test 1: an unsynchronized threads
 		//-----------------------------------------------------------
 		Thread t1 = new Thread(new RandomGenerator(array,  0,  20));
 		Thread t2 = new Thread(new RandomGenerator(array, 20,  50));
@@ -66,7 +69,7 @@ public class TestThreads {
 		System.out.println("Main: Exit");
 
 		//-----------------------------------------------------------
-		// Test 2:
+		// Test 2: synchronize two threads
 		//-----------------------------------------------------------
 		Thread t5 = new Thread(new Counter());
 		Thread t6 = new Thread(new Counter());
@@ -82,36 +85,62 @@ public class TestThreads {
 		System.out.println(num);
 
 		//-----------------------------------------------------------
-		// Test 2:
+		// Test 3: using lambda
+		//-----------------------------------------------------------
+		new Thread(() -> System.out.println("lambda")).start();
+
+		//-----------------------------------------------------------
+		// Test 4:
 		//-----------------------------------------------------------
 		class Threads4 {
 
-			public void start () {
-				new Threads4().go();
+			public void start () { new Threads4().go(); }
+			public void go    () { new Thread(() -> System.out.println("foo")).start(); }
+			
+//			public void go() {
+//				Runnable r = new Runnable() {
+//					public void run() {
+//						System.out.println("foo");
+//					}
+//				};
+//
+//				Thread t = new Thread(r);
+//				t.start();
+//			}
+		}
+		new Threads4().start();
+		
+		//-----------------------------------------------------------
+		// Test 5: synchronize two threads
+		//-----------------------------------------------------------
+		class IncCounter implements Runnable {
+			private int count;
+
+			@Override
+			public void run() {
+				for(int i = 0 ; i < 1000000; ++i) 
+					synchronized ("aaaa") {
+						count++;
+					}
 			}
 			
-			public void go() {
-				Runnable r = new Runnable() {
-					public void run() {
-						System.out.print("foo");
-					}
-				};
-
-				Thread t = new Thread(r);
-				t.start();
-				t.start();
+			int count() {
+				 return count;
 			}
 		}
-		
-		new Threads4().start();
+		IncCounter c = new IncCounter();
+		Thread t7 = new Thread(c);
+		Thread t8 = new Thread(c);
+		t7.start();
+		t8.start();
+		try {
+			t7.join(); // main waiting while t - thread running
+			t8.join(); // main waiting while t - thread running
+		}
+		catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		System.out.println("c.count()=" + c.count());
+
 	}
-	
-//	static void waitForSignal() {
-//		Object obj = new Object();
-//		synchronized (Thread.currentThread()) {
-//				obj.wait();
-//				obj.notify();
-//		}
-//	}
-	
 }
