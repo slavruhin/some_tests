@@ -36,51 +36,97 @@ public class Place extends Thread {
 		}
 
 		if(status == Status.THINK) {
-			pause(500);
 			status = Status.HUNGRY;
 		}
 		else if(status == Status.HUNGRY) {
-			synchronized (leftFork) {
-				if(! leftFork.isLocked()) {
-					leftFork.lock();
-					status = Status.LEFT_FORK_UP;
-				}
-			}
+			tryForksUp();
+//			synchronized (leftFork) {
+//				if(leftFork.isDown()) {
+//					leftFork.up();
+//					status = Status.LEFT_FORK_UP;
+//				} else {
+//					try {
+//						leftFork.wait();
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+//				}
+//			}
 		}
-		else if(status == Status.LEFT_FORK_UP) {
-			synchronized (rigthFork) {
-				if(! rigthFork.isLocked()) {
-					rigthFork.lock();
-					status = Status.RIGTH_FORK_UP;
-				}
-			}
-		}
+//		else if(status == Status.LEFT_FORK_UP) {
+//			synchronized (rigthFork) {
+//				if(rigthFork.isDown()) {
+//					rigthFork.up();
+//					status = Status.RIGTH_FORK_UP;
+//				}
+//				else {
+//					try {
+//						rigthFork.wait();
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+//				}
+//			}
+//		}
 		else if(status == Status.RIGTH_FORK_UP) {
-			synchronized (rigthFork) {
-				if(! rigthFork.isLocked()) {
-					rigthFork.lock();
-					status = Status.EAT;
-				}
-			}
+			status = Status.EAT;
+			pause(500);
 		}
 		else if(status == Status.EAT) {
-			pause(500);
 			synchronized (leftFork) {
-				leftFork.unlock();
+				leftFork.down();
 				status = Status.LEFT_FORK_DOWN;
+				leftFork.notifyAll();
 			}
 		}
 		else if(status == Status.LEFT_FORK_DOWN) {
 			synchronized (rigthFork) {
-				rigthFork.unlock();
+				rigthFork.down();
 				status = Status.RIGTH_FORK_DOWN;
+				rigthFork.notifyAll();
 			}
 		}
-		else
+		else {
 			status = Status.THINK;
+			pause(500);
+		}
 
 		synchronized (logger) {
 			logger.addMessage("Changed status: " + toString());
+		}
+	}
+	
+	private void tryForksUp () {
+
+		synchronized (leftFork) {
+			if(leftFork.isDown()) {
+				leftFork.up();
+				status = Status.LEFT_FORK_UP;
+			}
+		}
+		if(status == Status.LEFT_FORK_UP) {
+			synchronized (rigthFork) {
+				if(rigthFork.isDown()) {
+					rigthFork.up();
+					status = Status.RIGTH_FORK_UP;
+				}
+				else {
+					synchronized (leftFork) {
+						leftFork.down();
+						status = Status.HUNGRY;
+					}
+				}
+			}
+		}
+
+		if(status == Status.HUNGRY) {
+			synchronized (leftFork) {
+				try { 
+					leftFork.wait();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
@@ -94,7 +140,7 @@ public class Place extends Thread {
 
 	@Override
 	public void run() {
-		for(int i = 0 ; i < 30 ; ++i) {
+		for(int i = 0 ; i < 20 ; ++i) {
 			System.out.println(toString());
 			changeStatus();
 		}

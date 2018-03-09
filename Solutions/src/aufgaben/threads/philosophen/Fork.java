@@ -17,9 +17,10 @@ package aufgaben.threads.philosophen;
  *
  */
 public class Fork {
-	private boolean blocked = false;
+	private boolean up = false;
 	
-	public void    lock()     { blocked = true;  }
-	public void    unlock()   { blocked = false; }
-	public boolean isLocked() { return blocked;  }
+	public void    up()     { up = true;  }
+	public void    down()   { up = false; }
+	public boolean isUp()   { return up;  }
+	public boolean isDown() { return !up; }
 }

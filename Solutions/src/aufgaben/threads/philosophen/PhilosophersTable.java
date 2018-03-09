@@ -7,9 +7,7 @@ public class PhilosophersTable {
 
 	public static void main(String[] args) throws InterruptedException {
 		
-/*
 		Logger logger = new Logger();
-		
 		
 		Fork fork1 = new Fork(), 
 			 fork2 = new Fork(),
@@ -62,6 +60,5 @@ public class PhilosophersTable {
 		Logfile file = new Logfile("philosophers.log");
 		file.save(logger.getLog());
 		file.close();
-*/		
 	}
 }
