@@ -20,10 +20,28 @@ class Test150 {
 //--------------------------------------------------------
 //test 1XX
 class Test151 {
+	static class A {
+		void foo() throws Exception {
+			throw new Exception();
+		}
+	}
+	static class SubB2 extends A {
+		void foo() {
+			System.out.println("B ");
+		}
+	}
 	public static void test() {
+		A a = new SubB2();
+		try {
+			a.foo();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
 
+//--------------------------------------------------------
+//test 1XX
 class Test152 {
 	public static void test() {
 	}
@@ -35,6 +53,19 @@ class Test153 {
 }
 
 class Test154 {
+	public void go(int x) {
+		assert (x > 0);
+		switch (x) {
+			case 2:
+				break;
+			default:
+				assert false;
+		}
+	}
+	private void go2(int x) {
+		assert (x < 0);
+	}
+
 	public static void test() {
 	}
 }

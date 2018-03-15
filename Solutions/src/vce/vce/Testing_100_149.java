@@ -89,6 +89,7 @@ class Test106 {
 //--------------------------------------------------------
 //test 107
 class Test107 {
+	@SuppressWarnings("serial")
 	static class TestException extends Exception { }
 	static class A {
 		public String sayHello(String name) throws TestException {
@@ -103,6 +104,12 @@ class Test107 {
 			e.printStackTrace();
 		}
 	}
+//	public static void test() throws TestException {
+//		new A().sayHello("Aiko");
+//	}
+//	public static void test() throws TestException {
+//		new A().sayHello("Aiko");
+//	}
 }
 //--------------------------------------------------------
 //test 108
@@ -166,7 +173,8 @@ class Test112 {
 	public static void test() {
 		List list = new ArrayList();
 		list.add("1"); list.add("2"); list.add("3");
-//		for (Object obj: reverse(list))
+		// reverse(list) returned Iterator, but we need - any collection
+//		for (Object obj: reverse(list))               
 //			System.out.print(obj + ", ");
 	}
 }
@@ -209,17 +217,20 @@ class Test116 {
 }
 
 
+@SuppressWarnings("serial")
 //--------------------------------------------------------
 //test 117
-class Test117 {
+class Test117 implements Serializable {
+	//static class Tree implements Serializable { }
 	static class Tree { }
 
 	public static void test() {
-		Test117 f = new Test117();
+		Tree f = new Tree();
 		try {
 			FileOutputStream fs = new FileOutputStream("Forest.ser");
 			ObjectOutputStream os = new ObjectOutputStream(fs);
-			os.writeObject(f); os.close();
+			os.writeObject(f);  // java.io.NotSerializableException
+			os.close();
 		} catch (Exception ex) { ex.printStackTrace(); }
 	}
 }
@@ -234,11 +245,12 @@ class Test118 {
 //test 119
 class Test119 {
 	public static void test() {
-//		Console c = new Console();
-//		String pw;
-//		System.out.print("password: ");
-//		pw = c.readLine();
-//		System.out.println("got " + pw);
+		Console c = System.console(); // so is correct
+		//Console c = new Console();
+		String pw;
+		System.out.print("password: ");
+		pw = c.readLine();
+		System.out.println("got " + pw);
 	}
 }
 
@@ -268,9 +280,11 @@ class Test121 {
 //		String regex = " ";
 //		String regex = ".*";
 //		String regex = "\\s";
-//		String regex = "\\.\\s*";
+		String regex = "\\.\\s*";
 //		String regex = "\\w[ \.] +";
-//		String[] result = test.split(regex);
+		String[] result = test.split(regex);
+		for(String s : result)
+			System.out.println(s);
 	}
 }
 
@@ -291,17 +305,25 @@ class Test122 {
 	}
 	static class D implements B {
 		public void bMethod() {
+			System.out.println("D.bMethod");
 		}
 	} 
 	static class E extends D implements C {
 		public void aMethod() {
+			System.out.println("E.aMethod");
 		}
 		public void bMethod() {
+			System.out.println("E.bMethod");
 		}
 		public void cMethod() {
+			System.out.println("E.cMethod");
 		}
 	}
 	public static void test() {
+		D d = new D();
+		D e = new E();
+		e.bMethod();
+		((D)e).bMethod();
 	}
 }
 
@@ -347,16 +369,20 @@ class Test125 {
 	}
 	static class B implements A {
 		public void x() {
+			System.out.println("B.x()");
 		}
 		public void y() {
+			System.out.println("B.y()");
 		}
 	}
 	static class C extends B {
 		public void x() {
+			System.out.println("C.x()");
 		}
 	}
 	public static void test() {
 		java.util.List<A> list = new java.util.ArrayList<A>();
+		//java.util.List<B> list = new java.util.ArrayList<B>();
 		list.add(new B());
 		list.add(new C());
 		for (A a : list) {
@@ -421,16 +447,18 @@ class Test129 {
 	static class Hypotenuse {
 		public InnerTriangle it = new InnerTriangle();
 
-		static class InnerTriangle {
+		class InnerTriangle {
 			public int base;
 			public int height;
 		}
 	}
 	public static void test() {
+		int i1 = new Hypotenuse().it.base;
+		int i2 = new Hypotenuse().new InnerTriangle().base;
+		int i3 = new Hypotenuse().it.base;
 	}
 }
 
-//130
 //--------------------------------------------------------
 //test 130
 class Test130 {
@@ -509,7 +537,6 @@ class Test133 {
 	}
 }
 
-
 //--------------------------------------------------------
 //test 134
 class Test134 {
@@ -534,7 +561,7 @@ class Test135 {
 }
 
 //--------------------------------------------------------
-//test 135
+//test 136
 class Test136 {
 	static class Line {
 		public class Point {
@@ -547,78 +574,225 @@ class Test136 {
 	static class Triangle {
 		public Triangle() {
 			// Which code, inserted here, correctly retrieves a local instance of a Point object?
-			// insert code here
+			// Point p = Line.getPoint();
+			// Line.Point p = Line.getPoint();
+			// Point p = (new Line()).getPoint();
+			// Line.Point p = (new Line()).getPoint();
 		}
 	}
 	public static void test() {
 	}
 }
 
+//--------------------------------------------------------
+//test 137
 class Test137 {
+	static class TestA {
+		public void start() { System.out.println("TestA"); }
+	}
+	static class TestB extends TestA {
+		public void start() { System.out.println("TestB"); }
+	}
 	public static void test() {
+		//((TestA)new TestB()).start();
+		TestA a = new TestB();
+		((TestA)a).start();
+		a.start();
+		TestB b = new TestB();
+		((TestA)b).start();
+		b.start();
 	}
 }
 
+//--------------------------------------------------------
+//test 138
 class Test138 {
+//	Given the following six method names:
+//		addListener
+//		addMouseListener    X
+//		setMouseListener
+//		deleteMouseListener
+//		removeMouseListener X
+//		registerMouseListener
+//	How many of these method names follow JavaBean Listener naming rules?
 	public static void test() {
 	}
 }
 
+//--------------------------------------------------------
+//test 139
 class Test139 {
 	public static void test() {
+		Object obj = new int[] { 1, 2, 3 };
+		int[] someArray = (int[]) obj;
+		for (int i : someArray)
+			System.out.print(i + " ");
 	}
 }
 
+//--------------------------------------------------------
+//test 140
 class Test140 {
 	public static void test() {
 	}
 }
 
-class Test141 {
-	public static void test() {
+//--------------------------------------------------------
+//test 141
+class Test141 implements Runnable {
+	public static void test() throws Exception {
+		Thread t = new Thread(new Test141());
+		t.start();
+		System.out.print("Started");
+		t.join();
+		System.out.print("Complete");
+	}
+	public void run() {
+		for (int i = 0; i < 4; i++) {
+			System.out.print(i);
+		}
 	}
 }
 
-class Test142 {
+//--------------------------------------------------------
+//test 142
+class Test142 implements Runnable {
+	synchronized void hit(long n) {
+		for (int i = 1; i < 3; i++)
+			System.out.print(n + "-" + i + " ");
+	}
+	public void run() {
+		hit(Thread.currentThread().getId());
+	}
 	public static void test() {
+		new Thread(new Test142()).start();
+		new Thread(new Test142()).start();
 	}
 }
 
+//--------------------------------------------------------
+//test 143
 class Test143 {
 	public static void test() {
 	}
 }
-
+//--------------------------------------------------------
+//test 144
 class Test144 {
 	public static void test() {
 	}
 }
 
+//--------------------------------------------------------
+//test 145
 class Test145 {
 	public static void test() {
 	}
 }
 
-class Test146 {
+//--------------------------------------------------------
+//test 146
+class Test146 implements Comparable<Test146> {
+	private String name;
+	public Test146(String name) {
+		this.name = name;
+	}
+	public int hashCode() {
+		return 420;
+	}
+	public String name() {
+		return name;
+	}
+	@Override
+	public int compareTo(Test146 o) {
+		return name.compareTo(o.name);
+	}
+	
 	public static void test() {
+		HashMap<Test146, Integer> h = new HashMap<Test146, Integer>();
+		h.put(new Test146("a1"), 420);
+		h.put(new Test146("f1"), 420);
+		h.put(new Test146("b1"), 420);
+		h.put(new Test146("e1"), 420);
+		h.put(new Test146("c1"), 420);
+		h.put(new Test146("g1"), 420);
+
+		for(Test146 t : h.keySet())
+			System.out.print(t.name() + " ");
+		System.out.println();
+		
+		//Set<Test146> keys = h.keySet();
+		List<Test146> list = new ArrayList<Test146>(h.keySet());
+		Collections.sort(list);
+		for(Test146 t : list)
+			System.out.print(t.name() + " ");
+		System.out.println();
+		
 	}
 }
 
+//--------------------------------------------------------
+//test 147
 class Test147 {
 	public static void test() {
+		TreeSet<Integer> s = new TreeSet<Integer>();
+		TreeSet<Integer> subs = new TreeSet<Integer>();
+		for (int i = 606; i < 613; i++)
+			if (i % 2 == 0)
+				s.add(i);
+		subs = (TreeSet)s.subSet(608, true, 611, true);
+		s.add(629);
+		System.out.println(s + " " + subs);
 	}
 }
 
+//--------------------------------------------------------
+//test 148
 class Test148 {
 	public static void test() {
 	}
 }
 
+//--------------------------------------------------------
+//test 149
 class Test149 {
+	class MinMaxA<E extends Comparable<E>> {
+		E min = null;
+		E max = null;
+		public MinMaxA() {
+		}
+		public void put(E value) {
+			/* store min or max */
+		}
+	}
+//	class MinMaxB<E implements Comparable<E>> {
+//		E min = null;
+//		E max = null;
+//		public MinMaxB() {}
+//		public void put(E value) { /* store min or max */ }
+//	}
+//	class MinMaxC<E extends Comparable<E>> {
+//		<E> E min = null;
+//		<E> E max = null;
+//		public MinMaxC() {}
+//		public <E> void put(E value) { 
+//			/* store min or max */
+//		}
+//	}
+//	class MinMaxD<E implements Comparable<E>> {
+//		<E> E min = null;
+//		<E> E max = null;
+//		public MinMaxD() {}
+//		public <E> void put(E value) { 
+//			/* store min or max */ 
+//		}
+//	}
+
 	public static void test() {
 	}
 }
 
+//--------------------------------------------------------
 public class Testing_100_149 {
 	public static void main(String[] args) {
 //		Test100.test();  System.out.println();
@@ -662,12 +836,12 @@ public class Testing_100_149 {
 //		Test138.test();  System.out.println();
 //		Test139.test();  System.out.println();
 //		Test140.test();  System.out.println();
-//		Test141.test();  System.out.println();
+//		for(int i = 0; i < 10; ++i) try { Test141.test(); System.out.println(); } catch (Exception e) { e.printStackTrace(); }  System.out.println();
 //		Test142.test();  System.out.println();
 //		Test143.test();  System.out.println();
 //		Test144.test();  System.out.println();
 //		Test145.test();  System.out.println();
-//		Test146.test();  System.out.println();
+		Test146.test();  System.out.println();
 //		Test147.test();  System.out.println();
 //		Test148.test();  System.out.println();
 //		Test149.test();  System.out.println();

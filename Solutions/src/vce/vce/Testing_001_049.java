@@ -761,7 +761,7 @@ public class Testing_001_049 {
 		// Test002.test(); System.out.println();
 		// Test003.test(); System.out.println();
 		// Test004.test(); System.out.println();
-		// Test005.test();	System.out.println();
+		 Test005.test();	System.out.println();
 		// Test006.test(); System.out.println();
 		// Test007.test(); System.out.println();
 		// Test008.test(); System.out.println();
