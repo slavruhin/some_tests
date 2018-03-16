@@ -494,6 +494,11 @@ class Test197 {
 
 class Test198 {
 	public static void test() {
+		Console c = System.console();
+		String pw = c.readPassword("%s", "pw: ").toString(); // String pw = c.readPassword("%s", "pw: ")
+		System.out.println("got " + pw);
+		String name = c.readLine("%s", "name: ");
+		System.out.println(" got " + name);                  //System.out.println(" got ", name);
 	}
 }
 

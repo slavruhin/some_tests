@@ -1,4 +1,5 @@
 package vce.vce;
+import java.io.*;
 import java.util.*;
 
 //--------------------------------------------------------
@@ -75,11 +76,26 @@ class Test213 {
 
 class Test214 {
 	public static void test() {
+		TreeSet<Integer> s = new TreeSet<Integer>();
+		TreeSet<Integer> subs = new TreeSet<Integer>();
+		for(int i = 606; i < 613; i++)
+		if(i%2 == 0) s.add(i);
+		subs = (TreeSet)s.subSet(608, true, 611, true);
+		//subs.add(611); 
+		subs.add(629);          // java.lang.IllegalArgumentException: key out of range
+		System.out.println(s + " " + subs);
 	}
 }
 
 class Test215 {
 	public static void test() {
+		ArrayList<String> strings = new ArrayList<String>();
+		strings.add("aAaA");
+		strings.add("AaA");
+		strings.add("aAa");
+		strings.add("AAaa");
+		Collections.sort(strings);
+		for (String s : strings) { System.out.print(s + " "); }
 	}
 }
 
@@ -104,7 +120,18 @@ class Test219 {
 }
 
 class Test220 {
+	public enum Dogs {collie, harrier, shepherd};
+	
 	public static void test() {
+		Dogs myDog = Dogs.shepherd;
+		switch (myDog) {
+			case collie:
+				System.out.print("collie ");
+			/* case */ default:
+				System.out.print("retriever ");
+			case harrier:
+				System.out.print("harrier ");
+		}
 	}
 }
 
@@ -120,6 +147,14 @@ class Test222 {
 
 class Test223 {
 	public static void test() {
+		String str = "null";
+		if (str == null) {
+			System.out.println("null");
+		} else if (str.length() == 0) {   // missing if
+		System.out.println("zero");
+		} else {
+		System.out.println("some");
+		}
 	}
 }
 
@@ -129,7 +164,40 @@ class Test224 {
 }
 
 class Test225 {
-	public static void test() {
+	class A {
+		public void process() {
+			System.out.print("A,");
+		}
+		public void processE()  throws IOException {
+			System.out.print("Aext,");
+		}
+	}
+
+	class B extends A {
+		// not allowed additional exception
+//		public void process() throws IOException {
+//			super.process();
+//			System.out.print("B,");
+//			throw new IOException();
+//		}
+		// allowed without exception or using super class of Exception
+		public void processE() /* throws Exception */ {
+			System.out.print("Bext,");
+		}
+	}
+
+	class c extends A {
+		// not allowed
+//		public void processE() throws Exception {
+//			System.out.print("Cext,");
+//		}
+		// allowed
+		public void processE() throws EOFException {
+			System.out.print("Cext,");
+		}
+	}
+
+		public static void test() {
 	}
 }
 
@@ -224,7 +292,7 @@ public class Testing_200_240 {
 //		Test211.test();  System.out.println();
 //		Test212.test();  System.out.println();
 //		Test213.test();  System.out.println();
-//		Test214.test();  System.out.println();
+		Test214.test();  System.out.println();
 //		Test215.test();  System.out.println();
 //		Test216.test();  System.out.println();
 //		Test217.test();  System.out.println();
