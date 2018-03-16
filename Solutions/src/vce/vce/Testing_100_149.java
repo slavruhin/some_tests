@@ -709,17 +709,24 @@ class Test146 implements Comparable<Test146> {
 	}
 	
 	public static void test() {
+		Test146 o = new Test146("g1");
+
 		HashMap<Test146, Integer> h = new HashMap<Test146, Integer>();
 		h.put(new Test146("a1"), 420);
 		h.put(new Test146("f1"), 420);
+		h.put(new Test146("g1"), 420);     // inserted : not equals to o
 		h.put(new Test146("b1"), 420);
+		h.put(o, 420);                     // inserted
 		h.put(new Test146("e1"), 420);
 		h.put(new Test146("c1"), 420);
-		h.put(new Test146("g1"), 420);
+		h.put(o, 420);                     // not inserted : duplicate
 
 		for(Test146 t : h.keySet())
 			System.out.print(t.name() + " ");
 		System.out.println();
+		
+		int x = h.get(o);
+		System.out.println(x);
 		
 		//Set<Test146> keys = h.keySet();
 		List<Test146> list = new ArrayList<Test146>(h.keySet());
