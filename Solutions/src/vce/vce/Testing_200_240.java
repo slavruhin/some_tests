@@ -202,7 +202,19 @@ class Test225 {
 }
 
 class Test226 {
+	public void genNumbers() {
+		ArrayList numbers = new ArrayList();
+		for (int i = 0; i < 10; i++) {
+			//int value = i * ((int) Math.random());
+			int value = (int) (i * Math.random());
+			System.out.println("i=" + i + ", value=" + value);
+			Integer intObj = new Integer(value);
+			numbers.add(intObj);
+		}
+		System.out.println(numbers);
+	}
 	public static void test() {
+		new Test226().genNumbers();
 	}
 }
 
@@ -212,7 +224,20 @@ class Test227 {
 }
 
 class Test228 {
+	private Object o;
+	private void doSomethingElse(Object obj) {
+		o = obj;
+	}
+	public void doSomething() {
+		Object o = new Object();
+		doSomethingElse(o);
+		o = new Object();
+		doSomethingElse(null);
+		o = null;
+	}
+
 	public static void test() {
+		new Test228().doSomething();
 	}
 }
 
@@ -222,7 +247,26 @@ class Test229 {
 }
 
 class Test230 {
+	interface DeclareStuff {
+		public static final int EASY = 3;
+
+		void doStuff(int t);
+	}
+	static class TestDeclare implements DeclareStuff {
+		public static void test() {
+			int x = 5;
+			new TestDeclare().doStuff(++x);
+		}
+		// Cannot reduce the visibility of the inherited method from Test230.DeclareStuff
+		//void doStuff(int s) {
+		public void doStuff(int s) {
+			s += EASY + ++s;
+			System.out.println("s " + s);
+		}
+	}
+
 	public static void test() {
+		new TestDeclare().test();
 	}
 }
 
@@ -237,12 +281,33 @@ class Test232 {
 }
 
 class Test233 {
+	interface DoStuff2 {
+	    float getRange(int low, int high);
+	}
+	interface DoMore {
+	    float getAvg(int a, int b, int c);
+	}
+	abstract class DoAbstract implements DoStuff2, DoMore { 
+	} 
+	class DoStuff implements DoStuff2 {
+	    public float getRange(int x, int y) { return 3.14f; }
+	} 
+	interface DoAll extends DoMore {
+	    float getAvg(int a, int b, int c, int d);
+	} 
 	public static void test() {
 	}
 }
 
 class Test234 {
 	public static void test() {
+		Long tail = 2000L;
+		Long distance = 1999L;
+		Long story = 1000L;
+		if ((tail > distance) ^ ((story * 2) == tail))
+			System.out.print("1");
+		if ((distance + 1 != tail) ^ ((story * 2) == distance))
+			System.out.print("2");
 	}
 }
 
@@ -292,7 +357,7 @@ public class Testing_200_240 {
 //		Test211.test();  System.out.println();
 //		Test212.test();  System.out.println();
 //		Test213.test();  System.out.println();
-		Test214.test();  System.out.println();
+//		Test214.test();  System.out.println();
 //		Test215.test();  System.out.println();
 //		Test216.test();  System.out.println();
 //		Test217.test();  System.out.println();
@@ -312,7 +377,7 @@ public class Testing_200_240 {
 //		Test231.test();  System.out.println();
 //		Test232.test();  System.out.println();
 //		Test233.test();  System.out.println();
-//		Test234.test();  System.out.println();
+		Test234.test();  System.out.println();
 //		Test235.test();  System.out.println();
 //		Test236.test();  System.out.println();
 //		Test237.test();  System.out.println();
