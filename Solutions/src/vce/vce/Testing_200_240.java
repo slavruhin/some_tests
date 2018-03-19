@@ -217,12 +217,36 @@ class Test228 {
 }
 
 class Test229 {
+	void doStuff(int x) {
+		System.out.print(" doStuff x = " + x++);
+	}
+	
 	public static void test() {
+		int x = 6;
+		Test229 p = new Test229();
+		p.doStuff(x);
+		System.out.print(" main x = " + x);
 	}
 }
 
 class Test230 {
+	interface DeclareStuff {
+		public static final int EASY = 3;
+		void doStuff(int t);
+	}
+
+	static class TestDeclare implements DeclareStuff {
+		public void test() {
+			int x = 5;
+			new TestDeclare().doStuff(++x);
+		}
+		public void doStuff(int s) {
+			s += EASY + ++s;
+			System.out.println("s " + s);
+		}
+	}
 	public static void test() {
+		new TestDeclare().test();
 	}
 }
 
@@ -237,6 +261,29 @@ class Test232 {
 }
 
 class Test233 {
+	@FunctionalInterface
+	interface DoStuff2 {
+		float getRange(int low, int high);
+	}
+
+	@FunctionalInterface
+	interface DoMore {
+		float getAvg(int a, int b, int c);
+	}
+
+	abstract class DoAbstract implements DoStuff2, DoMore {
+	}
+
+	class DoStuff implements DoStuff2 {
+		public float getRange(int x, int y) {
+			return 3.14f;
+		}
+	}
+
+	interface DoAll extends DoMore {
+		float getAvg(int a, int b, int c, int d);
+	}
+
 	public static void test() {
 	}
 }
@@ -292,7 +339,7 @@ public class Testing_200_240 {
 //		Test211.test();  System.out.println();
 //		Test212.test();  System.out.println();
 //		Test213.test();  System.out.println();
-		Test214.test();  System.out.println();
+//		Test214.test();  System.out.println();
 //		Test215.test();  System.out.println();
 //		Test216.test();  System.out.println();
 //		Test217.test();  System.out.println();
@@ -308,7 +355,7 @@ public class Testing_200_240 {
 //		Test227.test();  System.out.println();
 //		Test228.test();  System.out.println();
 //		Test229.test();  System.out.println();
-//		Test230.test();  System.out.println();
+		Test230.test();  System.out.println();
 //		Test231.test();  System.out.println();
 //		Test232.test();  System.out.println();
 //		Test233.test();  System.out.println();
