@@ -3,6 +3,20 @@ package nested.gebaeude;
 import java.util.ArrayList;
 import nested.gebaeude.Gebaeude.Stockwerk.Raum;
 
+
+class A {
+	enum B { B1, B2 };
+
+	interface IS {
+		enum C { C1, C2 };
+		void is();
+	};
+	
+	static void f() {
+		class D {
+		}
+	}
+}
 /**
  * @author Sergej Lavruhin
  *

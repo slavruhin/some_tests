@@ -1,8 +1,22 @@
 package vce.vce;
 
 import java.io.*;
+import java.text.NumberFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import vce.vce.Charter0604.Computer;
+import vce.vce.Charter0604.Keyboard;
+import vce.vce.Charter0608.SpecialSerial;
+import vce.vce.Charter0612.Car;
+import vce.vce.Charter0612.Dodge;
+import vce.vce.Charter0612.Ford;
+import vce.vce.Charter0612.Vehicle;
+import vce.vce.Charter0612.Wheels;
 
 
+//--------------------------------------------------------
+//Charter 01-07
 class Charter0107 {
 	static void test() {
 		for(int __x = 0; __x < 3; __x++) ;
@@ -13,6 +27,8 @@ class Charter0107 {
 	}
 }
 
+//--------------------------------------------------------
+//Charter 01-09
 class Charter0109 {
 	static class Hobbit {
 		int countGold(int x, int y) {
@@ -32,6 +48,8 @@ class Charter0109 {
 	}
 }
 
+//--------------------------------------------------------
+//Charter 02-09
 class Charter0209 {
 	static class Tree { }
 	
@@ -51,7 +69,8 @@ class Charter0209 {
 	}
 }
 
-
+//--------------------------------------------------------
+//Charter 02-11
 class Charter0211 {
 	static class Alpha {
 		static String s = " ";
@@ -79,6 +98,8 @@ class Charter0211 {
 	}
 }
 
+//--------------------------------------------------------
+//Charter 02-15
 class Charter0215 {
 	static class A {
 	}
@@ -108,6 +129,8 @@ class Charter0215 {
 	}
 }
 
+//--------------------------------------------------------
+//Charter 03-02
 class Charter0302 {
 	static class Alien {
 		String invade(short ships) {
@@ -128,6 +151,8 @@ class Charter0302 {
 	}
 }
 
+//--------------------------------------------------------
+//Charter 03-03
 class Charter0303 {
 	static void test() {
 		int[][] a = {{1,2,}, {3,4}};
@@ -139,6 +164,8 @@ class Charter0303 {
 	}
 }
 
+//--------------------------------------------------------
+//Charter 03-04
 class Charter0304 {
 	static class Mixer {
 		Mixer m1;
@@ -162,6 +189,8 @@ class Charter0304 {
 	}
 }
 
+//--------------------------------------------------------
+//Charter 03-07
 class Charter0307 {
 	static  class Bridge {
 		static enum Suits {
@@ -189,6 +218,8 @@ class Charter0307 {
 	}
 }
 
+//--------------------------------------------------------
+//Charter 03-13
 class Charter0313 {
 	static class Dark {
 		int x = 3;
@@ -208,6 +239,9 @@ class Charter0313 {
 		new Dark().go1();
 	}
 }
+
+//--------------------------------------------------------
+//Charter 04-02
 class Charter0402 {
 	static void test() {
 		float f1 = 2.3f;
@@ -226,6 +260,8 @@ class Charter0402 {
 	}
 }
 
+//--------------------------------------------------------
+//Charter 04-03
 class Charter0403 {
 	static void test() {
 		String[] args = {"Fork", "live2"};
@@ -237,6 +273,8 @@ class Charter0403 {
 		}
 }
 
+//--------------------------------------------------------
+//Charter 04-09
 class Charter0409 {
 	static void test() {
 		int mask = 0;
@@ -251,7 +289,8 @@ class Charter0409 {
 	}
 }
 
-
+//--------------------------------------------------------
+//Charter 05-07
 class Charter0507 {
 	class SubException extends Exception {}
 
@@ -282,6 +321,30 @@ class Charter0507 {
 	}
 }
 
+//--------------------------------------------------------
+//Charter 05-09
+//9 10 10 d 13 
+class Charter0509 {
+	static int x = 7;
+	static { x++; }
+	public static void test() {
+		String s = "";
+		for (int y = 0; y < 3; y++) {
+			x++;
+			switch (x) {
+				case 8:		s += "8 ";
+				case 9:		s += "9 ";
+				case 10:	{ s += "10 "; break; }
+				default:	s += "d ";
+				case 13:	s += "13 ";
+			}
+		}
+		System.out.println(s);
+	}
+}
+
+//--------------------------------------------------------
+//Charter 05-11
 class Charter0511 {
 	static String s = "";
 	static void doStuff() {
@@ -304,6 +367,8 @@ class Charter0511 {
 	}
 }
 
+//--------------------------------------------------------
+//Charter 05-13
 class Charter0513 {
 	void go() {
 		go();
@@ -322,6 +387,26 @@ class Charter0513 {
 	}
 }
 
+//--------------------------------------------------------
+//Charter 06-01 :
+//m.start=0 m.group=
+//m.start=1 m.group=
+//m.start=2 m.group=34
+//m.start=4 m.group=
+//m.start=5 m.group=
+//m.start=6 m.group=
+class Charter0601 {
+	public static void test() {
+		Pattern p = Pattern.compile("\\d*");
+		Matcher m = p.matcher("ab34ef");
+		boolean b = false;
+		while(b = m.find())
+			System.out.println("m.start=" + m.start() + " m.group=" + m.group());
+	}
+}
+
+//--------------------------------------------------------
+//Charter 06-03
 class Charter0603 {
 	static void test() {
 		String s = "-";
@@ -340,6 +425,8 @@ class Charter0603 {
 	}
 }
 
+//--------------------------------------------------------
+//Charter 06-04
 class Charter0604 {
 	static class Keyboard {
 	}
@@ -365,6 +452,8 @@ class Charter0604 {
 	}
 }
 
+//--------------------------------------------------------
+//Charter 06-05
 class Charter0605 {
 /*	
 	File; 
@@ -403,8 +492,9 @@ class Charter0605 {
 	}
 }
 
+//--------------------------------------------------------
+//Charter 06-08
 class Charter0608 {
-
 	static class SpecialSerial implements Serializable {
 		transient int y = 7;
 		static int z = 9;
@@ -426,7 +516,81 @@ class Charter0608 {
 	}
 }
 
+//--------------------------------------------------------
+//Charter 06-12 :
+class Charter0612 {
+	static class Vehicle { }
+	static class Wheels { }
+	static class Car extends Vehicle implements Serializable { }
+	static class Ford extends Car { }
+	static class Dodge extends Car {
+		Wheels w = new Wheels();
+	}
+	public static void test() {
+		Vehicle o1 = new Vehicle();
+		Wheels  o2 = new Wheels();
+		Car     o3 = new Car();
+		Ford    o4 = new Ford();
+		Dodge   o5 = new Dodge();
+		try {
+			ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream("charter0612.obj"));
+			os.writeObject(o1);
+			os.writeObject(o2);
+			os.writeObject(o3);
+			os.writeObject(o4);
+			os.writeObject(o5);
+			os.close();
+			
+			ObjectInputStream is = new ObjectInputStream(new FileInputStream("charter0612.obj"));
+			Vehicle oo1 = (Vehicle)is.readObject();
+			Wheels  oo2 = (Wheels)is.readObject();
+			Car     oo3 = (Car)is.readObject();
+			Ford    oo4 = (Ford)is.readObject();
+			Dodge   oo5 = (Dodge)is.readObject();
+			is.close();
+		} catch (Exception e) {
+			System.out.print("exc");
+		} finally {
+			System.out.println();
+		}
+	}
+}
 
+//--------------------------------------------------------
+//Charter 06-13 :
+class Charter0613 {
+	public static void test() {
+		String s = "987,123456";
+		double d = 987.123456d;
+		NumberFormat nf = NumberFormat.getInstance();
+		nf.setMaximumFractionDigits(5);
+		System.out.println(nf.format(d) + " ");
+		try {
+			System.out.println(nf.parse(s));
+		} catch (Exception e) {
+			System.out.println("got exc");
+		}
+	}
+}
+
+//--------------------------------------------------------
+//Charter 06-14 :
+class Charter0614 {
+	public static void test() {
+		Pattern p = Pattern.compile("\\d+");
+		Matcher m = p.matcher("ab2c4d67");
+		int count = 0;
+		while(m.find())
+			count++;
+		System.out.print(count);
+	}
+}
+
+/**
+ * 
+ * @author slavruhin-ronn
+ *
+ */
 public class TestintSCJP {
 	public static void main(String[] args) {
 		//new Charter0109().test();

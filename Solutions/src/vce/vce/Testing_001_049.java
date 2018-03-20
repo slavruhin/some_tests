@@ -1,9 +1,9 @@
 package vce.vce;
 
+import static vce.ext.ExtTest045.testExtTest045;
 import java.io.*;
 import java.text.*;
 import java.util.*;
-import static vce.ext.ExtTest045.testExtTest045;
 
 //--------------------------------------------------------
 //test 001
@@ -128,22 +128,6 @@ class Test007 {
 }
 
 // --------------------------------------------------------
-// test 038
-class Test038 {
-	public static void test() {
-		Float pi = new Float(3.14f);
-		if (pi > 3) {
-			System.out.print("pi is bigger than 3. ");
-		} else {
-			System.out.print("pi is not bigger than 3. ");
-		}
-		// finally {
-		// System.out.println("Have a nice day.");
-		// }
-	}
-}
-
-// --------------------------------------------------------
 // test 008
 class Test008 {
 	static enum Direction {
@@ -237,16 +221,25 @@ class Test012 {
 // test 013
 // What is the result?
 class Test013 {
+//	public static void parse(String str) {
+//		try {
+//			float f = Float.parseFloat(str);
+//		} catch (NumberFormatException nfe) {
+//			f = 0;                 // compilation problem : f is not availible
+//		} finally {
+//			System.out.println(f); // compilation problem : f is not availible
+//		}
+//	}
 	public static void parse(String str) {
+		float f = 0f;
 		try {
-			float f = Float.parseFloat(str);
+			f = Float.parseFloat(str);
 		} catch (NumberFormatException nfe) {
-			// f = 0;
+			f = 0;
 		} finally {
-			// System.out.println(f);
+			System.out.println(f);   // if error resolved that 0.0 
 		}
 	}
-
 	public static void test() {
 		parse("invalid");
 	}
@@ -347,7 +340,7 @@ class Test019 {
 		Barn barn1 = new Barn();
 		Barn barn2 = (Barn) build1;
 		Object obj1 = (Object) build1;
-		// String str1 = (String) build1;
+//		String str1 = (String) build1;
 		Building build2 = (Building) barn1;
 	}
 }
@@ -363,19 +356,16 @@ class Test021 {
 			return country;
 		}
 	}
-
 	static class Yen extends Money {
 		public String getC() {
 			return super.country;
 		}
 	}
-
 	static class Euro extends Money {
 		public String getC(int x) {
 			return super.getC();
 		}
 	}
-
 	public static void test() {
 		System.out.print(new Yen().getC() + " " + new Euro().getC());
 	}
@@ -388,19 +378,15 @@ class Test022 {
 	static class Food implements Serializable {
 		int good = 3;
 	}
-
 	static class Fruit extends Food {
 		int juice = 5;
 	}
-
 	static class Banana extends Fruit {
 		int yellow = 4;
-
 		// more Banana methods go here
 		public Banana serializeBanana(Banana b) {
 			return b;
 		}
-
 		public Banana deserializeBanana() {
 			return this;
 		}
@@ -409,7 +395,7 @@ class Test022 {
 	public static void test() {
 		Banana b = new Banana();
 		Banana b2 = new Banana();
-		b.serializeBanana(b); // assume correct serialization
+		b.serializeBanana(b);       // assume correct serialization
 		b2 = b.deserializeBanana(); // assume correct
 		System.out.println("restore " + b2.yellow + b2.juice + b2.good);
 	}
@@ -621,9 +607,9 @@ class Test035 {
 	}
 }
 
-// --------------------------------------------------------
-// test 036
-// What is the result?
+//--------------------------------------------------------
+//test 036
+//What is the result?
 class Test036 {
 	public static void test() {
 		int x = 0;
@@ -633,6 +619,23 @@ class Test036 {
 			++x;
 		} while (x < 5);
 		System.out.print(x + "," + y);
+	}
+}
+
+//--------------------------------------------------------
+//test 0368
+//What is the result?
+class Test038 {
+	public static void test() {
+		Float pi = new Float(3.14f);
+		if (pi > 3) {
+			System.out.print("pi is bigger than 3. ");
+		} else {
+			System.out.print("pi is not bigger than 3. ");
+		}
+		// finally {
+		// System.out.println("Have a nice day.");
+		// }
 	}
 }
 
@@ -730,7 +733,7 @@ class Test044 {
 	public static void test() {
 		Object[] myObjects = { new Integer(12), new String("foo"), new Integer(5), new Boolean(true) };
 
-		Arrays.sort(myObjects);
+		//Arrays.sort(myObjects);
 		// Exception in thread "main" java.lang.ClassCastException: java.lang.Integer
 		// cannot be cast to java.lang.String
 		// at java.lang.String.compareTo(Unknown Source)
@@ -740,6 +743,7 @@ class Test044 {
 		// at vce.Test044.test(Testing.java:131)
 		// at vce.Testing.main(Testing.java:196)
 
+		// in other case: 12 foo 5 true 
 		for (int i = 0; i < myObjects.length; i++) {
 			System.out.print(myObjects[i].toString());
 			System.out.print(" ");
@@ -761,7 +765,7 @@ public class Testing_001_049 {
 		// Test002.test(); System.out.println();
 		// Test003.test(); System.out.println();
 		// Test004.test(); System.out.println();
-		 Test005.test();	System.out.println();
+		// Test005.test();	System.out.println();
 		// Test006.test(); System.out.println();
 		// Test007.test(); System.out.println();
 		// Test008.test(); System.out.println();
@@ -800,7 +804,7 @@ public class Testing_001_049 {
 		// Test041.test(); System.out.println();
 		// Test042.test(); System.out.println();
 		// Test043.test(); System.out.println();
-		// Test044.test(); System.out.println();
+		 Test044.test(); System.out.println();
 		// Test045.test(); System.out.println();
 		// Test046.test(); System.out.println();
 		// Test047.test(); System.out.println();
