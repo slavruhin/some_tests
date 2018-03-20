@@ -2,18 +2,8 @@ package vce.vce;
 
 import java.io.*;
 import java.text.NumberFormat;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import vce.vce.Charter0604.Computer;
-import vce.vce.Charter0604.Keyboard;
-import vce.vce.Charter0608.SpecialSerial;
-import vce.vce.Charter0612.Car;
-import vce.vce.Charter0612.Dodge;
-import vce.vce.Charter0612.Ford;
-import vce.vce.Charter0612.Vehicle;
-import vce.vce.Charter0612.Wheels;
-
+import java.util.*;
+import java.util.regex.*;
 
 //--------------------------------------------------------
 //Charter 01-07
@@ -586,6 +576,228 @@ class Charter0614 {
 	}
 }
 
+//--------------------------------------------------------
+//Charter 07-01 :
+class Charter0701 {
+	public static void test() {
+		// Which statements could be inserted here to allow this code to compile and run?
+		// List<List<Integer>> table = new List<List<Integer>>();              // A. 
+		List<List<Integer>> table = new ArrayList<List<Integer>>();         // B. 
+		// List<List<Integer>> table = new ArrayList<ArrayList<Integer>>();    // C. 
+		// List<List, Integer> table = new List<List, Integer>();              // D. 
+		// List<List, Integer> table = new ArrayList<List, Integer>();         // E. 
+		// List<List, Integer> table = new ArrayList<ArrayList, Integer>();    // F. 
+		// None of the above                                                   // G. 
+		for (int i = 0; i <= 10; i++) {
+			List<Integer> row = new ArrayList<Integer>();
+			for (int j = 0; j <= 10; j++)
+				row.add(i * j);
+			table.add(row);
+		}
+		for (List<Integer> row : table)
+			System.out.println(row);
+	}
+}
+
+//--------------------------------------------------------
+//Charter 07-03 :
+class Charter0703 {
+	public static void test() {
+		@SuppressWarnings("rawtypes")
+		Set set = new TreeSet();
+		set.add("2");
+		set.add(3);              // java.lang.ClassCastException
+		set.add("1");
+		Iterator it = set.iterator();
+		while (it.hasNext())
+			System.out.print(it.next() + " ");
+	}
+}
+
+//--------------------------------------------------------
+//Charter 07-04 :
+class Charter0704 {
+	static class ToDos {
+		String day;
+
+		ToDos(String d) {
+			day = d;
+		}
+
+		public boolean equals(Object o) {
+			return ((ToDos) o).day == this.day;
+		}
+		public int hashCode() { return 9; }
+	}
+	public static void test() {
+		Map<ToDos, String> m = new HashMap<ToDos, String>();
+		ToDos t1 = new ToDos("Monday");
+		ToDos t2 = new ToDos("Monday");
+		ToDos t3 = new ToDos("Tuesday");
+		m.put(t1, "doLaundry");
+		m.put(t2, "payBills");
+		m.put(t3, "cleanAttic");
+		System.out.println(m.size());
+	}
+}
+
+//--------------------------------------------------------
+//Charter 07-06 :
+class Charter0706 {
+	interface Hungry<E> {
+		void munch(E x);
+	}
+
+	interface Carnivore<E extends Animal> extends Hungry<E> {}
+	//--- interface Carnivore<E extends Plant> extends Hungry<E> {}
+	
+	interface Herbivore<E extends Plant> extends Hungry<E> {}
+	//interface Herbivore<E extends Animal> extends Hungry<E> {}
+
+	abstract class Plant {
+	}
+
+	class Grass extends Plant {
+	}
+
+	abstract class Animal {
+	}
+
+	//class Sheep extends Animal implements Herbivore<Sheep> {
+	//	public void munch(Sheep x) {
+	//	}
+	//}
+	//class Sheep extends Animal implements Herbivore<Plant> {
+	//	public void munch(Grass x) {
+	//	}
+	//}
+	class Sheep extends Plant implements Carnivore<Wolf> {
+		public void munch(Wolf x) {
+		}
+	}
+
+	//class Wolf extends Animal implements Carnivore<Sheep> {
+	//	public void munch(Sheep x) {
+	//	}
+	//}
+	class Wolf extends Animal implements Herbivore<Grass> {
+		public void munch(Grass x) {}
+	}
+	
+	public static void test() {
+	}
+}
+
+//--------------------------------------------------------
+//Charter 07-09 :
+class Charter0709 {
+	public static void test2() {
+		PriorityQueue<Integer> pq = new PriorityQueue<Integer>();
+		int[] array = {1,2,3,4,5,6,7,8,9,4,5,6,7,8,9};
+		for(int i : array) 
+			pq.add(i);
+		System.out.println("size=" + pq.size());
+		for(int i = 0 ; i < 14 ; ++i) 
+			System.out.println(pq.peek());
+		System.out.println("size=" + pq.size());
+		for(int i = 0 ; i < 14 ; ++i) 
+			System.out.println(pq.poll());
+		System.out.println("size=" + pq.size());
+	}
+	
+	public static void test() {
+		PriorityQueue<String> pq = new PriorityQueue<String>();
+		pq.add("2");                        // [2]
+		pq.add("4");                        // [2, 4]
+		System.out.print(pq.peek() + " ");  // -> 2
+		pq.offer("1");                      // [1, 4, 2]
+		pq.add("3");                        // [1, 3, 2, 4]
+		pq.remove("1");                     // [2, 3, 4]
+		System.out.print(pq.poll() + " ");  // -> 2
+		if (pq.remove("2"))                 // [3, 4]
+			System.out.print(pq.poll() + " ");
+		System.out.println(pq.poll() + " " + pq.peek()); // -> 3 4
+	}
+}
+
+//--------------------------------------------------------
+//Charter 07-13 :
+class Charter0713 {
+	public static void test() {
+		TreeMap<String, String> myMap = new TreeMap<String, String>();
+		myMap.put("a", "apple");
+		myMap.put("d", "date");
+		myMap.put("f", "fig");
+		myMap.put("p", "pear");
+		System.out.println("1st after mango: " + myMap.higherKey("f"));
+		System.out.println("1st after mango: " + myMap.ceilingKey("f"));
+		System.out.println("1st after mango: " + myMap.floorKey("f"));
+
+		SortedMap<String, String> sub = new TreeMap<String, String>();
+		sub = myMap.tailMap("f");
+		System.out.println("1st after mango: " + sub.firstKey());
+	}
+}
+
+//--------------------------------------------------------
+//Charter 07-15 :
+class Charter0715 {
+	static class Dog {
+		int size;
+		Dog(int s) {
+			size = s;
+		}
+		@Override
+		public String toString() {
+			return Integer.valueOf(size).toString();
+		}
+	}
+
+	public static void test() {
+		TreeSet<Integer> i = new TreeSet<Integer>();
+		TreeSet<Dog> d = new TreeSet<Dog>();
+
+		d.add(new Dog(1));
+		d.add(new Dog(2));
+		d.add(new Dog(1));
+		i.add(1);
+		i.add(2);
+		i.add(1);
+		System.out.println(d.size() + " " + i.size());
+		System.out.print(i);
+		
+		System.out.println();
+			
+	}
+}
+
+//--------------------------------------------------------
+//Charter 07-16 :
+class Charter0716 {
+	static class Othello implements Comparator<String> {
+		public int compare(String a, String b) {
+			return b.compareTo(a);
+		}
+	}
+	public static void test() {
+		String[] s = { "map", "pen", "marble", "key" };
+		Othello o = new Othello();
+		Arrays.sort(s, o);
+		for (String s2 : s)
+			System.out.print(s2 + " ");
+		System.out.println(Arrays.binarySearch(s, "map"));
+	}
+}
+
+/*
+//--------------------------------------------------------
+//Charter 07-05 :
+class Charter0710 {
+	public static void test() {
+	}
+}
+*/
+
 /**
  * 
  * @author slavruhin-ronn
@@ -596,7 +808,7 @@ public class TestintSCJP {
 		//new Charter0109().test();
 		//new Charter0209().test();
 		//new Charter0211().test();
-		new Charter0215().test();
+		//new Charter0215().test();
 		//new Charter0303().test();
 		//new Charter0304().test();
 		//new Charter0307().test();
@@ -608,6 +820,14 @@ public class TestintSCJP {
 		//new Charter0513().test();
 		//new Charter0603().test();
 		//new Charter0604().test();
+		//new Charter0701().test();
+		//new Charter0703().test();
+		//new Charter0704().test();
+		//new Charter0709().test();
+		//new Charter0709().test2();
+		new Charter0713().test();
+		//new Charter0715().test();
+		//new Charter0716().test();
 	}
 
 }
